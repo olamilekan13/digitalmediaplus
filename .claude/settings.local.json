@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer require:*)",
+      "Bash(php artisan breeze:install:*)",
+      "Bash(npm install:*)",
+      "Bash(php artisan make:model:*)",
+      "Bash(php artisan make:migration:*)",
+      "Bash(php artisan migrate:*)",
+      "Bash(php artisan:*)",
+      "Bash(php artisan make:seeder:*)",
+      "Bash(cat:*)",
+      "Bash(npm run build:*)",
+      "Bash(composer show:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(echo:*)",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\about-sections\\index.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\feature-highlights\\index.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\feature-highlights\\create.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\statistics\\index.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\statistics\\create.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\testimonials\\index.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\testimonials\\create.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\faqs\\index.blade.php\")",
+      "Bash(\"c:\\laragon\\www\\DigitalMediaPlus\\resources\\views\\admin\\faqs\\create.blade.php\")",
+      "Bash(xargs ls:*)",
+      "Bash(dir:*)",
+      "Bash(nul)",
+      "Bash(findstr:*)",
+      "Bash(curl:*)",
+      "Bash(npx vite build)",
+      "Bash(.node_modules.binvite build)",
+      "Bash(if exist node_modules rmdir /s /q node_modules)",
+      "Bash(rm:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
