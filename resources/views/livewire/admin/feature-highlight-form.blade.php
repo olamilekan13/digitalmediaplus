@@ -212,39 +212,46 @@
 
 @push('scripts')
 <script>
+    let editorInstance;
+
+    document.addEventListener('livewire:initialized', function () {
+        initializeCKEditor();
+    });
+
     document.addEventListener('livewire:navigated', function () {
-        initializeFeatureTinyMCE();
+        initializeCKEditor();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeFeatureTinyMCE();
-    });
+    function initializeCKEditor() {
+        setTimeout(() => {
+            if (typeof ClassicEditor !== 'undefined') {
+                const element = document.querySelector('#description');
+                if (element) {
+                    if (editorInstance) {
+                        editorInstance.destroy().catch(error => console.log(error));
+                    }
 
-    function initializeFeatureTinyMCE() {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#description');
-            tinymce.init({
-                selector: '#description',
-                height: 300,
-                menubar: false,
-                plugins: 'lists link code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.description || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('description', editor.getContent());
-                    });
+                    ClassicEditor
+                        .create(element, {
+                            toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        })
+                        .then(editor => {
+                            editorInstance = editor;
+                            const initialContent = @this.get('description') || '';
+                            editor.setData(initialContent);
+                            editor.model.document.on('change:data', () => {
+                                @this.set('description', editor.getData());
+                            });
+                        })
+                        .catch(error => console.error('CKEditor error:', error));
                 }
-            });
-        }
+            }
+        }, 100);
     }
 
     document.addEventListener('livewire:navigating', function () {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#description');
+        if (editorInstance) {
+            editorInstance.destroy().catch(error => console.log(error));
         }
     });
 </script>

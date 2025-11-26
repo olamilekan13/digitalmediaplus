@@ -249,39 +249,50 @@
 
 @push('scripts')
 <script>
+    let serviceDescriptionEditor;
+
+    document.addEventListener('livewire:initialized', function () {
+        initializeServiceCKEditor();
+    });
+
     document.addEventListener('livewire:navigated', function () {
-        initializeServiceTinyMCE();
+        initializeServiceCKEditor();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeServiceTinyMCE();
-    });
+    function initializeServiceCKEditor() {
+        setTimeout(() => {
+            if (typeof ClassicEditor !== 'undefined') {
+                const descriptionElement = document.querySelector('#description');
+                if (!descriptionElement) return;
 
-    function initializeServiceTinyMCE() {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#description');
-            tinymce.init({
-                selector: '#description',
-                height: 300,
-                menubar: false,
-                plugins: 'lists link code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.description || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('description', editor.getContent());
-                    });
+                if (serviceDescriptionEditor) {
+                    serviceDescriptionEditor.destroy().catch(error => console.log(error));
                 }
-            });
-        }
+
+                ClassicEditor
+                    .create(descriptionElement, {
+                        toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                    })
+                    .then(editor => {
+                        serviceDescriptionEditor = editor;
+
+                        const initialDescription = @this.get('description') || '';
+                        editor.setData(initialDescription);
+
+                        editor.model.document.on('change:data', () => {
+                            @this.set('description', editor.getData());
+                        });
+                    })
+                    .catch(error => {
+                        console.error('CKEditor initialization error:', error);
+                    });
+            }
+        }, 100);
     }
 
     document.addEventListener('livewire:navigating', function () {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#description');
+        if (serviceDescriptionEditor) {
+            serviceDescriptionEditor.destroy().catch(error => console.log(error));
         }
     });
 </script>

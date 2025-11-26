@@ -253,39 +253,46 @@
 
 @push('scripts')
 <script>
+    let editorInstance;
+
+    document.addEventListener('livewire:initialized', function () {
+        initializeCKEditor();
+    });
+
     document.addEventListener('livewire:navigated', function () {
-        initializeHeroTinyMCE();
+        initializeCKEditor();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeHeroTinyMCE();
-    });
+    function initializeCKEditor() {
+        setTimeout(() => {
+            if (typeof ClassicEditor !== 'undefined') {
+                const element = document.querySelector('#tagline');
+                if (element) {
+                    if (editorInstance) {
+                        editorInstance.destroy().catch(error => console.log(error));
+                    }
 
-    function initializeHeroTinyMCE() {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#tagline');
-            tinymce.init({
-                selector: '#tagline',
-                height: 200,
-                menubar: false,
-                plugins: 'lists link code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.tagline || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('tagline', editor.getContent());
-                    });
+                    ClassicEditor
+                        .create(element, {
+                            toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        })
+                        .then(editor => {
+                            editorInstance = editor;
+                            const initialContent = @this.get('tagline') || '';
+                            editor.setData(initialContent);
+                            editor.model.document.on('change:data', () => {
+                                @this.set('tagline', editor.getData());
+                            });
+                        })
+                        .catch(error => console.error('CKEditor error:', error));
                 }
-            });
-        }
+            }
+        }, 100);
     }
 
     document.addEventListener('livewire:navigating', function () {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#tagline');
+        if (editorInstance) {
+            editorInstance.destroy().catch(error => console.log(error));
         }
     });
 </script>

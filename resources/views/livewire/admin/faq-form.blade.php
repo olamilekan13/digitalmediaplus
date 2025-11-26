@@ -136,39 +136,46 @@
 
 @push('scripts')
 <script>
+    let editorInstance;
+
+    document.addEventListener('livewire:initialized', function () {
+        initializeCKEditor();
+    });
+
     document.addEventListener('livewire:navigated', function () {
-        initializeFaqTinyMCE();
+        initializeCKEditor();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeFaqTinyMCE();
-    });
+    function initializeCKEditor() {
+        setTimeout(() => {
+            if (typeof ClassicEditor !== 'undefined') {
+                const element = document.querySelector('#answer');
+                if (element) {
+                    if (editorInstance) {
+                        editorInstance.destroy().catch(error => console.log(error));
+                    }
 
-    function initializeFaqTinyMCE() {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#answer');
-            tinymce.init({
-                selector: '#answer',
-                height: 300,
-                menubar: false,
-                plugins: 'lists link code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.answer || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('answer', editor.getContent());
-                    });
+                    ClassicEditor
+                        .create(element, {
+                            toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        })
+                        .then(editor => {
+                            editorInstance = editor;
+                            const initialContent = @this.get('answer') || '';
+                            editor.setData(initialContent);
+                            editor.model.document.on('change:data', () => {
+                                @this.set('answer', editor.getData());
+                            });
+                        })
+                        .catch(error => console.error('CKEditor error:', error));
                 }
-            });
-        }
+            }
+        }, 100);
     }
 
     document.addEventListener('livewire:navigating', function () {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#answer');
+        if (editorInstance) {
+            editorInstance.destroy().catch(error => console.log(error));
         }
     });
 </script>

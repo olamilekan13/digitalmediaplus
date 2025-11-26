@@ -210,61 +210,69 @@
 
 @push('scripts')
 <script>
+    let descriptionEditor, storyTextEditor;
+
+    document.addEventListener('livewire:initialized', function () {
+        initializeAboutCKEditors();
+    });
+
     document.addEventListener('livewire:navigated', function () {
-        initializeTinyMCE();
+        initializeAboutCKEditors();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeTinyMCE();
-    });
+    function initializeAboutCKEditors() {
+        setTimeout(() => {
+            if (typeof ClassicEditor !== 'undefined') {
+                // Initialize Description Editor
+                const descriptionElement = document.querySelector('#description');
+                if (descriptionElement) {
+                    if (descriptionEditor) {
+                        descriptionEditor.destroy().catch(error => console.log(error));
+                    }
 
-    function initializeTinyMCE() {
-        if (typeof tinymce !== 'undefined') {
-            // Initialize Description Editor
-            tinymce.remove('#description');
-            tinymce.init({
-                selector: '#description',
-                height: 300,
-                menubar: false,
-                plugins: 'lists link table code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.description || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('description', editor.getContent());
-                    });
+                    ClassicEditor
+                        .create(descriptionElement, {
+                            toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        })
+                        .then(editor => {
+                            descriptionEditor = editor;
+                            const initialDescription = @this.get('description') || '';
+                            editor.setData(initialDescription);
+                            editor.model.document.on('change:data', () => {
+                                @this.set('description', editor.getData());
+                            });
+                        })
+                        .catch(error => console.error('CKEditor description error:', error));
                 }
-            });
 
-            // Initialize Story Text Editor
-            tinymce.remove('#story_text');
-            tinymce.init({
-                selector: '#story_text',
-                height: 400,
-                menubar: false,
-                plugins: 'lists link table code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.story_text || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('story_text', editor.getContent());
-                    });
+                // Initialize Story Text Editor
+                const storyTextElement = document.querySelector('#story_text');
+                if (storyTextElement) {
+                    if (storyTextEditor) {
+                        storyTextEditor.destroy().catch(error => console.log(error));
+                    }
+
+                    ClassicEditor
+                        .create(storyTextElement, {
+                            toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        })
+                        .then(editor => {
+                            storyTextEditor = editor;
+                            const initialStoryText = @this.get('story_text') || '';
+                            editor.setData(initialStoryText);
+                            editor.model.document.on('change:data', () => {
+                                @this.set('story_text', editor.getData());
+                            });
+                        })
+                        .catch(error => console.error('CKEditor story_text error:', error));
                 }
-            });
-        }
+            }
+        }, 100);
     }
 
-    // Cleanup on navigation
     document.addEventListener('livewire:navigating', function () {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove();
-        }
+        if (descriptionEditor) descriptionEditor.destroy().catch(error => console.log(error));
+        if (storyTextEditor) storyTextEditor.destroy().catch(error => console.log(error));
     });
 </script>
 @endpush
