@@ -187,130 +187,134 @@
             </div>
         </div>
 
+        @livewireScripts
+
         <!-- Alpine.js for dropdown -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         <!-- Sidebar Toggle Script -->
         <script>
-            function initAdminSidebar() {
-                console.log('Admin sidebar script loaded');
+            (function() {
+                console.log('Sidebar script executing...');
 
-                const sidebarToggle = document.getElementById('sidebar-toggle');
-                const sidebarClose = document.getElementById('sidebar-close');
-                const sidebar = document.getElementById('sidebar');
-                const backdrop = document.getElementById('sidebar-backdrop');
-                const mainContent = document.getElementById('main-content');
+                function initAdminSidebar() {
+                    console.log('Admin sidebar script loaded');
 
-                console.log('Elements found:', {
-                    toggle: !!sidebarToggle,
-                    close: !!sidebarClose,
-                    sidebar: !!sidebar,
-                    backdrop: !!backdrop,
-                    mainContent: !!mainContent
-                });
+                    const sidebarToggle = document.getElementById('sidebar-toggle');
+                    const sidebarClose = document.getElementById('sidebar-close');
+                    const sidebar = document.getElementById('sidebar');
+                    const backdrop = document.getElementById('sidebar-backdrop');
+                    const mainContent = document.getElementById('main-content');
 
-                if (!sidebarToggle || !sidebar) {
-                    console.error('Required sidebar elements not found!');
-                    return;
-                }
+                    console.log('Elements found:', {
+                        toggle: !!sidebarToggle,
+                        close: !!sidebarClose,
+                        sidebar: !!sidebar,
+                        backdrop: !!backdrop,
+                        mainContent: !!mainContent
+                    });
 
-                // Check if we're on desktop
-                function isDesktop() {
-                    return window.innerWidth >= 1024;
-                }
+                    if (!sidebarToggle || !sidebar) {
+                        console.error('Required sidebar elements not found!');
+                        return;
+                    }
 
-                // Open sidebar
-                function openSidebar() {
-                    console.log('Opening sidebar, isDesktop:', isDesktop());
-                    sidebar.classList.remove('-translate-x-full');
+                    // Check if we're on desktop
+                    function isDesktop() {
+                        return window.innerWidth >= 1024;
+                    }
 
-                    if (isDesktop()) {
-                        // Desktop: push content to the right
-                        mainContent.classList.add('lg:pl-64');
+                    // Open sidebar
+                    function openSidebar() {
+                        console.log('Opening sidebar, isDesktop:', isDesktop());
+                        sidebar.classList.remove('-translate-x-full');
+
+                        if (isDesktop()) {
+                            // Desktop: push content to the right
+                            mainContent.classList.add('lg:pl-64');
+                            backdrop.classList.add('hidden');
+                        } else {
+                            // Mobile: show backdrop overlay
+                            backdrop.classList.remove('hidden');
+                        }
+                    }
+
+                    // Close sidebar
+                    function closeSidebar() {
+                        console.log('Closing sidebar');
+                        sidebar.classList.add('-translate-x-full');
                         backdrop.classList.add('hidden');
-                    } else {
-                        // Mobile: show backdrop overlay
-                        backdrop.classList.remove('hidden');
+
+                        if (isDesktop()) {
+                            // Desktop: remove content padding
+                            mainContent.classList.remove('lg:pl-64');
+                        }
                     }
-                }
 
-                // Close sidebar
-                function closeSidebar() {
-                    console.log('Closing sidebar');
-                    sidebar.classList.add('-translate-x-full');
-                    backdrop.classList.add('hidden');
-
+                    // Initialize sidebar state on page load
+                    console.log('Initializing sidebar, window width:', window.innerWidth);
                     if (isDesktop()) {
-                        // Desktop: remove content padding
-                        mainContent.classList.remove('lg:pl-64');
-                    }
-                }
-
-                // Initialize sidebar state on page load
-                console.log('Initializing sidebar, window width:', window.innerWidth);
-                if (isDesktop()) {
-                    // Desktop: open by default
-                    openSidebar();
-                } else {
-                    // Mobile: closed by default
-                    closeSidebar();
-                }
-
-                // Toggle button click
-                sidebarToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Toggle clicked, sidebar hidden:', sidebar.classList.contains('-translate-x-full'));
-
-                    if (sidebar.classList.contains('-translate-x-full')) {
+                        // Desktop: open by default
                         openSidebar();
                     } else {
+                        // Mobile: closed by default
                         closeSidebar();
                     }
-                });
 
-                // Close button click
-                if (sidebarClose) {
-                    sidebarClose.addEventListener('click', function(e) {
+                    // Toggle button click
+                    sidebarToggle.addEventListener('click', function(e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        closeSidebar();
-                    });
-                }
+                        console.log('Toggle clicked, sidebar hidden:', sidebar.classList.contains('-translate-x-full'));
 
-                // Backdrop click
-                if (backdrop) {
-                    backdrop.addEventListener('click', function() {
-                        closeSidebar();
-                    });
-                }
-
-                // Handle window resize
-                let resizeTimer;
-                window.addEventListener('resize', function() {
-                    clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(function() {
-                        // Reset sidebar state on resize
-                        if (isDesktop()) {
+                        if (sidebar.classList.contains('-translate-x-full')) {
                             openSidebar();
                         } else {
                             closeSidebar();
                         }
-                    }, 250);
-                });
-            }
+                    });
 
-            // Initialize on DOMContentLoaded
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initAdminSidebar);
-            } else {
-                initAdminSidebar();
-            }
+                    // Close button click
+                    if (sidebarClose) {
+                        sidebarClose.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeSidebar();
+                        });
+                    }
 
-            // Also initialize on Livewire load
-            document.addEventListener('livewire:navigated', initAdminSidebar);
+                    // Backdrop click
+                    if (backdrop) {
+                        backdrop.addEventListener('click', function() {
+                            closeSidebar();
+                        });
+                    }
+
+                    // Handle window resize
+                    let resizeTimer;
+                    window.addEventListener('resize', function() {
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(function() {
+                            // Reset sidebar state on resize
+                            if (isDesktop()) {
+                                openSidebar();
+                            } else {
+                                closeSidebar();
+                            }
+                        }, 250);
+                    });
+                }
+
+                // Initialize immediately if DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initAdminSidebar);
+                } else {
+                    initAdminSidebar();
+                }
+
+                // Also initialize on Livewire navigation
+                document.addEventListener('livewire:navigated', initAdminSidebar);
+            })();
         </script>
-
-        @livewireScripts
     </body>
 </html>
