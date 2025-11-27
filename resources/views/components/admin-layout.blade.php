@@ -29,7 +29,7 @@
                  onclick="document.getElementById('sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
 
             <!-- Sidebar -->
-            <div class="fixed inset-y-0 left-0 z-[60] w-64 bg-gray-900 transform transition-all duration-300 ease-in-out -translate-x-full lg:translate-x-0" id="sidebar">
+            <div class="fixed inset-y-0 left-0 z-[60] w-64 bg-gray-900 transform transition-all duration-300 ease-in-out -translate-x-full" id="sidebar">
                 <div class="flex items-center justify-between h-16 bg-gray-800 px-4">
                     <span class="text-white text-xl font-bold">Admin Panel</span>
                     <!-- Close button for mobile/desktop -->
@@ -107,7 +107,7 @@
             </div>
 
             <!-- Main Content -->
-            <div id="main-content" class="lg:pl-64 transition-all duration-300">
+            <div id="main-content" class="transition-all duration-300">
                 <!-- Top Navigation -->
                 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
                     <button type="button" class="-m-2.5 p-2.5 text-gray-700" id="sidebar-toggle">
@@ -189,17 +189,40 @@
                 const backdrop = document.getElementById('sidebar-backdrop');
                 const mainContent = document.getElementById('main-content');
 
+                // Open sidebar on desktop by default
+                function initializeSidebar() {
+                    if (window.innerWidth >= 1024) {
+                        // Desktop: open by default
+                        sidebar.classList.remove('-translate-x-full');
+                        mainContent.classList.add('lg:pl-64');
+                    } else {
+                        // Mobile: closed by default
+                        sidebar.classList.add('-translate-x-full');
+                        mainContent.classList.remove('lg:pl-64');
+                    }
+                }
+
                 function openSidebar() {
                     sidebar.classList.remove('-translate-x-full');
                     if (window.innerWidth < 1024) {
+                        // Mobile: show backdrop
                         backdrop.classList.remove('hidden');
+                    } else {
+                        // Desktop: adjust content padding
+                        mainContent.classList.add('lg:pl-64');
                     }
                 }
 
                 function closeSidebar() {
                     sidebar.classList.add('-translate-x-full');
                     backdrop.classList.add('hidden');
+                    if (window.innerWidth >= 1024) {
+                        mainContent.classList.remove('lg:pl-64');
+                    }
                 }
+
+                // Initialize on load
+                initializeSidebar();
 
                 // Toggle button click
                 if (sidebarToggle) {
@@ -212,15 +235,20 @@
                     });
                 }
 
-                // Close button click
+                // Close button click (mobile only)
                 if (sidebarClose) {
                     sidebarClose.addEventListener('click', closeSidebar);
                 }
 
-                // Backdrop click
+                // Backdrop click (mobile only)
                 if (backdrop) {
                     backdrop.addEventListener('click', closeSidebar);
                 }
+
+                // Handle window resize
+                window.addEventListener('resize', function() {
+                    initializeSidebar();
+                });
             });
         </script>
 
