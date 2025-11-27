@@ -33,8 +33,12 @@
                 <div class="flex items-center justify-between h-16 bg-gray-800 px-4">
                     <span class="text-white text-xl font-bold">Admin Panel</span>
                     <!-- Close button for mobile/desktop -->
-                    <button id="sidebar-close" class="text-white hover:text-gray-300 transition-colors p-2">
-                        <i class="fas fa-times text-2xl"></i>
+                    <button id="sidebar-close"
+                            class="flex items-center justify-center w-8 h-8 text-white hover:text-gray-300 transition-colors"
+                            aria-label="Close sidebar">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
                     </button>
                 </div>
 
@@ -110,8 +114,14 @@
             <div id="main-content" class="transition-all duration-300">
                 <!-- Top Navigation -->
                 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-                    <button type="button" class="p-2 text-gray-900 hover:bg-gray-100 rounded-md transition-colors" id="sidebar-toggle">
-                        <i class="fas fa-bars text-2xl"></i>
+                    <!-- Hamburger Menu Button - Always Visible -->
+                    <button type="button"
+                            class="flex items-center justify-center w-10 h-10 p-2 text-gray-900 bg-white hover:bg-gray-100 rounded-md border border-gray-300 transition-colors"
+                            id="sidebar-toggle"
+                            aria-label="Toggle sidebar">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
                     </button>
 
                     <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
@@ -183,11 +193,21 @@
         <!-- Sidebar Toggle Script -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
+                console.log('Admin sidebar script loaded');
+
                 const sidebarToggle = document.getElementById('sidebar-toggle');
                 const sidebarClose = document.getElementById('sidebar-close');
                 const sidebar = document.getElementById('sidebar');
                 const backdrop = document.getElementById('sidebar-backdrop');
                 const mainContent = document.getElementById('main-content');
+
+                console.log('Elements found:', {
+                    toggle: !!sidebarToggle,
+                    close: !!sidebarClose,
+                    sidebar: !!sidebar,
+                    backdrop: !!backdrop,
+                    mainContent: !!mainContent
+                });
 
                 // Check if we're on desktop
                 function isDesktop() {
@@ -196,6 +216,7 @@
 
                 // Open sidebar
                 function openSidebar() {
+                    console.log('Opening sidebar, isDesktop:', isDesktop());
                     sidebar.classList.remove('-translate-x-full');
 
                     if (isDesktop()) {
@@ -210,6 +231,7 @@
 
                 // Close sidebar
                 function closeSidebar() {
+                    console.log('Closing sidebar');
                     sidebar.classList.add('-translate-x-full');
                     backdrop.classList.add('hidden');
 
@@ -220,6 +242,7 @@
                 }
 
                 // Initialize sidebar state on page load
+                console.log('Initializing sidebar, window width:', window.innerWidth);
                 if (isDesktop()) {
                     // Desktop: open by default
                     openSidebar();
@@ -232,7 +255,8 @@
                 if (sidebarToggle) {
                     sidebarToggle.addEventListener('click', function(e) {
                         e.preventDefault();
-                        console.log('Toggle clicked'); // Debug log
+                        e.stopPropagation();
+                        console.log('Toggle clicked, sidebar hidden:', sidebar.classList.contains('-translate-x-full'));
 
                         if (sidebar.classList.contains('-translate-x-full')) {
                             openSidebar();
@@ -240,12 +264,15 @@
                             closeSidebar();
                         }
                     });
+                } else {
+                    console.error('Sidebar toggle button not found!');
                 }
 
                 // Close button click
                 if (sidebarClose) {
                     sidebarClose.addEventListener('click', function(e) {
                         e.preventDefault();
+                        e.stopPropagation();
                         closeSidebar();
                     });
                 }

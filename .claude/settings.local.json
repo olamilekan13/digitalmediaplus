@@ -33,7 +33,12 @@
       "Bash(.node_modules.binvite build)",
       "Bash(if exist node_modules rmdir /s /q node_modules)",
       "Bash(rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push)",
+      "Bash(git push:*)",
+      "Bash(ssh-keyscan:*)",
+      "Bash(~/.ssh/known_hosts)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
