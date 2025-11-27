@@ -243,13 +243,17 @@
                     <!-- Teams -->
                     <div>
                         <label for="teams_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fab fa-microsoft text-blue-600 mr-1"></i> Teams URL
+                            <i class="fab fa-microsoft text-blue-600 mr-1"></i> Teams Username/User ID
                         </label>
-                        <input type="url"
+                        <input type="text"
                                id="teams_url"
                                wire:model="teams_url"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                               placeholder="https://teams.microsoft.com/...">
+                               placeholder="e.g., john.doe or userid123">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter your Teams username or user ID
+                        </p>
                         @error('teams_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror

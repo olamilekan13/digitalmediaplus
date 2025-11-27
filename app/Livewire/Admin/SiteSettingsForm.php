@@ -44,7 +44,7 @@ class SiteSettingsForm extends Component
         'instagram_url' => 'nullable|url|max:255',
         'linkedin_url' => 'nullable|url|max:255',
         'youtube_url' => 'nullable|url|max:255',
-        'teams_url' => 'nullable|url|max:255',
+        'teams_url' => 'nullable|string|max:255',
         'telegram_url' => 'nullable|url|max:255',
         'whatsapp_business_number' => 'nullable|string|max:20',
         'whatsapp_chat_enabled' => 'nullable|boolean',
@@ -65,7 +65,7 @@ class SiteSettingsForm extends Component
         'instagram_url.url' => 'Please enter a valid URL for Instagram.',
         'linkedin_url.url' => 'Please enter a valid URL for LinkedIn.',
         'youtube_url.url' => 'Please enter a valid URL for YouTube.',
-        'teams_url.url' => 'Please enter a valid URL for Teams.',
+        'teams_url.max' => 'Teams username/userid must not exceed 255 characters.',
         'telegram_url.url' => 'Please enter a valid URL for Telegram.',
     ];
 
