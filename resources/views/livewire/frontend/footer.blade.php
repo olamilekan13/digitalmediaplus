@@ -105,6 +105,20 @@
                             <i class="fab fa-youtube"></i>
                         </a>
                     @endif
+                    @if($siteSetting && $siteSetting->teams_url)
+                        <a href="{{ $siteSetting->teams_url }}"
+                           target="_blank"
+                           class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                            <i class="fab fa-microsoft"></i>
+                        </a>
+                    @endif
+                    @if($siteSetting && $siteSetting->telegram_url)
+                        <a href="{{ $siteSetting->telegram_url }}"
+                           target="_blank"
+                           class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>

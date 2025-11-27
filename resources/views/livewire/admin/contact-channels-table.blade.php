@@ -42,7 +42,7 @@
                         <option value="email">Email</option>
                         <option value="phone">Phone</option>
                         <option value="whatsapp">WhatsApp</option>
-                        <option value="skype">Skype</option>
+                        <option value="teams">Teams</option>
                         <option value="kingschat">Kingschat</option>
                     </select>
                 </div>
@@ -121,8 +121,8 @@
                                             <i class="fas fa-phone text-green-600 mr-2"></i>
                                         @elseif($channel->channel_type === 'whatsapp')
                                             <i class="fab fa-whatsapp text-green-600 mr-2"></i>
-                                        @elseif($channel->channel_type === 'skype')
-                                            <i class="fab fa-skype text-blue-600 mr-2"></i>
+                                        @elseif($channel->channel_type === 'teams')
+                                            <i class="fab fa-microsoft text-blue-600 mr-2"></i>
                                         @elseif($channel->channel_type === 'kingschat')
                                             <i class="fas fa-comments text-purple-600 mr-2"></i>
                                         @endif

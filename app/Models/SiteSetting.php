@@ -17,6 +17,8 @@ class SiteSetting extends Model
         'instagram_url',
         'linkedin_url',
         'youtube_url',
+        'teams_url',
+        'telegram_url',
         'whatsapp_business_number',
         'whatsapp_chat_enabled',
         'whatsapp_welcome_message',

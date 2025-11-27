@@ -226,7 +226,7 @@
                     </div>
 
                     <!-- YouTube -->
-                    <div class="md:col-span-2">
+                    <div>
                         <label for="youtube_url" class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fab fa-youtube text-red-600 mr-1"></i> YouTube URL
                         </label>
@@ -236,6 +236,36 @@
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                placeholder="https://youtube.com/c/yourchannel">
                         @error('youtube_url')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Teams -->
+                    <div>
+                        <label for="teams_url" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fab fa-microsoft text-blue-600 mr-1"></i> Teams URL
+                        </label>
+                        <input type="url"
+                               id="teams_url"
+                               wire:model="teams_url"
+                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                               placeholder="https://teams.microsoft.com/...">
+                        @error('teams_url')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Telegram -->
+                    <div class="md:col-span-2">
+                        <label for="telegram_url" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fab fa-telegram text-blue-500 mr-1"></i> Telegram URL
+                        </label>
+                        <input type="url"
+                               id="telegram_url"
+                               wire:model="telegram_url"
+                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                               placeholder="https://t.me/yourchannel">
+                        @error('telegram_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>

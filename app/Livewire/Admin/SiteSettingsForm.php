@@ -22,6 +22,8 @@ class SiteSettingsForm extends Component
     public $instagram_url;
     public $linkedin_url;
     public $youtube_url;
+    public $teams_url;
+    public $telegram_url;
     public $whatsapp_business_number;
     public $whatsapp_chat_enabled;
     public $whatsapp_welcome_message;
@@ -42,6 +44,8 @@ class SiteSettingsForm extends Component
         'instagram_url' => 'nullable|url|max:255',
         'linkedin_url' => 'nullable|url|max:255',
         'youtube_url' => 'nullable|url|max:255',
+        'teams_url' => 'nullable|url|max:255',
+        'telegram_url' => 'nullable|url|max:255',
         'whatsapp_business_number' => 'nullable|string|max:20',
         'whatsapp_chat_enabled' => 'nullable|boolean',
         'whatsapp_welcome_message' => 'nullable|string|max:500',
@@ -61,6 +65,8 @@ class SiteSettingsForm extends Component
         'instagram_url.url' => 'Please enter a valid URL for Instagram.',
         'linkedin_url.url' => 'Please enter a valid URL for LinkedIn.',
         'youtube_url.url' => 'Please enter a valid URL for YouTube.',
+        'teams_url.url' => 'Please enter a valid URL for Teams.',
+        'telegram_url.url' => 'Please enter a valid URL for Telegram.',
     ];
 
     public function mount()
@@ -84,6 +90,8 @@ class SiteSettingsForm extends Component
         $this->instagram_url = $this->settings->instagram_url;
         $this->linkedin_url = $this->settings->linkedin_url;
         $this->youtube_url = $this->settings->youtube_url;
+        $this->teams_url = $this->settings->teams_url;
+        $this->telegram_url = $this->settings->telegram_url;
         $this->whatsapp_business_number = $this->settings->whatsapp_business_number;
         $this->whatsapp_chat_enabled = (bool) $this->settings->whatsapp_chat_enabled;
         $this->whatsapp_welcome_message = $this->settings->whatsapp_welcome_message;
@@ -127,6 +135,8 @@ class SiteSettingsForm extends Component
             'instagram_url' => $this->instagram_url,
             'linkedin_url' => $this->linkedin_url,
             'youtube_url' => $this->youtube_url,
+            'teams_url' => $this->teams_url,
+            'telegram_url' => $this->telegram_url,
             'whatsapp_business_number' => $this->whatsapp_business_number,
             'whatsapp_chat_enabled' => $this->whatsapp_chat_enabled ? true : false,
             'whatsapp_welcome_message' => $this->whatsapp_welcome_message,

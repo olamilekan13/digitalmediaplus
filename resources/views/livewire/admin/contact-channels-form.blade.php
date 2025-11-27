@@ -120,8 +120,8 @@
                             <option value="whatsapp">
                                 <i class="fab fa-whatsapp"></i> WhatsApp
                             </option>
-                            <option value="skype">
-                                <i class="fab fa-skype"></i> Skype
+                            <option value="teams">
+                                <i class="fab fa-microsoft"></i> Teams
                             </option>
                             <option value="kingschat">
                                 <i class="fas fa-comments"></i> Kingschat
@@ -145,7 +145,7 @@
                                    $channel_type === 'email' ? 'e.g., contact@example.com' :
                                    ($channel_type === 'phone' ? 'e.g., +1 234 567 8900' :
                                    ($channel_type === 'whatsapp' ? 'e.g., +1 234 567 8900' :
-                                   ($channel_type === 'skype' ? 'e.g., username' :
+                                   ($channel_type === 'teams' ? 'e.g., username or email' :
                                    ($channel_type === 'kingschat' ? 'e.g., @username' : 'Enter contact value'))))
                                }}">
                         <p class="mt-1 text-xs text-gray-500">
@@ -155,9 +155,9 @@
                             @elseif($channel_type === 'phone' || $channel_type === 'whatsapp')
                                 <i class="fas fa-info-circle mr-1"></i>
                                 Include country code (e.g., +1 for USA)
-                            @elseif($channel_type === 'skype')
+                            @elseif($channel_type === 'teams')
                                 <i class="fas fa-info-circle mr-1"></i>
-                                Enter your Skype username
+                                Enter your Teams username or email
                             @elseif($channel_type === 'kingschat')
                                 <i class="fas fa-info-circle mr-1"></i>
                                 Enter your Kingschat handle (with or without @)
