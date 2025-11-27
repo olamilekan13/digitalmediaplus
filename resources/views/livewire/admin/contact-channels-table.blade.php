@@ -99,8 +99,12 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($channel->icon)
                                         @if(Str::startsWith($channel->icon, 'fa-'))
+                                            @php
+                                                $brandIconTypes = ['whatsapp', 'teams'];
+                                                $iconPrefix = in_array($channel->channel_type, $brandIconTypes) ? 'fab' : 'fas';
+                                            @endphp
                                             <div class="w-10 h-10 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg flex items-center justify-center border border-blue-200">
-                                                <i class="fas {{ $channel->icon }} text-blue-600 text-xl"></i>
+                                                <i class="{{ $iconPrefix }} {{ $channel->icon }} text-blue-600 text-xl"></i>
                                             </div>
                                         @else
                                             <img src="{{ Storage::url($channel->icon) }}"

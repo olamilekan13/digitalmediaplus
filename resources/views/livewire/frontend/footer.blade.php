@@ -58,8 +58,13 @@
                 <h4 class="text-white font-semibold mb-4">Contact Us</h4>
                 <ul class="space-y-3">
                     @foreach($contactChannels as $channel)
+                        @php
+                            $iconClass = $channel->icon ?? 'fa-info-circle';
+                            $brandIconTypes = ['whatsapp', 'teams'];
+                            $iconPrefix = in_array($channel->channel_type, $brandIconTypes) ? 'fab' : 'fas';
+                        @endphp
                         <li class="flex items-start">
-                            <i class="fas {{ $channel->icon ?? 'fa-info-circle' }} text-orange-500 mt-0.5 mr-3 flex-shrink-0"></i>
+                            <i class="{{ $iconPrefix }} {{ $iconClass }} text-orange-500 mt-0.5 mr-3 flex-shrink-0"></i>
                             <span class="text-sm break-words break-all">{{ $channel->value }}</span>
                         </li>
                     @endforeach
