@@ -33,7 +33,7 @@
                 <div class="flex items-center justify-between h-16 bg-gray-800 px-4">
                     <span class="text-white text-xl font-bold">Admin Panel</span>
                     <!-- Close button for mobile/desktop -->
-                    <button id="sidebar-close" class="text-white lg:hidden">
+                    <button id="sidebar-close" class="text-white hover:text-gray-300 transition-colors">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
@@ -189,36 +189,48 @@
                 const backdrop = document.getElementById('sidebar-backdrop');
                 const mainContent = document.getElementById('main-content');
 
-                // Open sidebar on desktop by default
+                let isDesktop = window.innerWidth >= 1024;
+                let sidebarOpen = false;
+
+                // Initialize sidebar state
                 function initializeSidebar() {
-                    if (window.innerWidth >= 1024) {
-                        // Desktop: open by default
-                        sidebar.classList.remove('-translate-x-full');
-                        mainContent.classList.add('lg:pl-64');
-                    } else {
-                        // Mobile: closed by default
-                        sidebar.classList.add('-translate-x-full');
-                        mainContent.classList.remove('lg:pl-64');
+                    isDesktop = window.innerWidth >= 1024;
+
+                    if (isDesktop && !sidebarOpen) {
+                        // Desktop: open by default on first load
+                        openSidebar();
+                        sidebarOpen = true;
+                    } else if (!isDesktop) {
+                        // Mobile: always start closed
+                        closeSidebar();
+                        sidebarOpen = false;
                     }
                 }
 
                 function openSidebar() {
                     sidebar.classList.remove('-translate-x-full');
-                    if (window.innerWidth < 1024) {
-                        // Mobile: show backdrop
-                        backdrop.classList.remove('hidden');
-                    } else {
-                        // Desktop: adjust content padding
+
+                    if (isDesktop) {
+                        // Desktop: push content
                         mainContent.classList.add('lg:pl-64');
+                        backdrop.classList.add('hidden');
+                    } else {
+                        // Mobile: show backdrop overlay
+                        backdrop.classList.remove('hidden');
                     }
+
+                    sidebarOpen = true;
                 }
 
                 function closeSidebar() {
                     sidebar.classList.add('-translate-x-full');
                     backdrop.classList.add('hidden');
-                    if (window.innerWidth >= 1024) {
+
+                    if (isDesktop) {
                         mainContent.classList.remove('lg:pl-64');
                     }
+
+                    sidebarOpen = false;
                 }
 
                 // Initialize on load
@@ -227,27 +239,45 @@
                 // Toggle button click
                 if (sidebarToggle) {
                     sidebarToggle.addEventListener('click', function() {
-                        if (sidebar.classList.contains('-translate-x-full')) {
-                            openSidebar();
-                        } else {
+                        if (sidebarOpen) {
                             closeSidebar();
+                        } else {
+                            openSidebar();
                         }
                     });
                 }
 
-                // Close button click (mobile only)
+                // Close button click
                 if (sidebarClose) {
-                    sidebarClose.addEventListener('click', closeSidebar);
+                    sidebarClose.addEventListener('click', function() {
+                        closeSidebar();
+                    });
                 }
 
-                // Backdrop click (mobile only)
+                // Backdrop click
                 if (backdrop) {
-                    backdrop.addEventListener('click', closeSidebar);
+                    backdrop.addEventListener('click', function() {
+                        closeSidebar();
+                    });
                 }
 
                 // Handle window resize
+                let resizeTimer;
                 window.addEventListener('resize', function() {
-                    initializeSidebar();
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(function() {
+                        const wasDesktop = isDesktop;
+                        isDesktop = window.innerWidth >= 1024;
+
+                        // If switching from mobile to desktop, open sidebar
+                        if (!wasDesktop && isDesktop) {
+                            openSidebar();
+                        }
+                        // If switching from desktop to mobile, close sidebar
+                        else if (wasDesktop && !isDesktop) {
+                            closeSidebar();
+                        }
+                    }, 250);
                 });
             });
         </script>
