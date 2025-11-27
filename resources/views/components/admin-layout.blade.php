@@ -114,6 +114,9 @@
             <div id="main-content" class="transition-all duration-300">
                 <!-- Top Navigation -->
                 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+                    <!-- TEST: This should be visible -->
+                    <div class="text-red-600 font-bold">MENU</div>
+
                     <!-- Hamburger Menu Button - Always Visible -->
                     <button type="button"
                             class="flex items-center justify-center w-10 h-10 p-2 text-gray-900 bg-white hover:bg-gray-100 rounded-md border border-gray-300 transition-colors"

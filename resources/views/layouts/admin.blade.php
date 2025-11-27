@@ -25,10 +25,21 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
+            <!-- Mobile Sidebar Backdrop -->
+            <div id="sidebar-backdrop"
+                 class="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 lg:hidden hidden transition-opacity duration-300"
+                 onclick="closeSidebar()"></div>
+
             <!-- Sidebar -->
-            <div class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out lg:translate-x-0" id="sidebar">
-                <div class="flex items-center justify-center h-16 bg-gray-800">
+            <div class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0" id="sidebar">
+                <div class="flex items-center justify-between h-16 bg-gray-800 px-4">
                     <span class="text-white text-xl font-bold">Admin Panel</span>
+                    <!-- Close button for mobile -->
+                    <button id="sidebar-close" class="text-white lg:hidden hover:text-gray-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 </div>
 
                 <nav class="mt-5 px-2">
@@ -103,8 +114,13 @@
             <div class="lg:pl-64">
                 <!-- Top Navigation -->
                 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-                    <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" id="sidebar-toggle">
-                        <i class="fas fa-bars text-xl"></i>
+                    <!-- Hamburger Menu Button -->
+                    <button type="button"
+                            class="flex items-center justify-center w-10 h-10 p-2 text-gray-900 bg-white hover:bg-gray-100 rounded-md border border-gray-300 transition-colors lg:hidden"
+                            id="sidebar-toggle">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
                     </button>
 
                     <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
@@ -155,8 +171,31 @@
 
         <!-- Mobile Sidebar Toggle -->
         <script>
-            document.getElementById('sidebar-toggle')?.addEventListener('click', function() {
-                document.getElementById('sidebar').classList.toggle('-translate-x-full');
+            function openSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const backdrop = document.getElementById('sidebar-backdrop');
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+            }
+
+            function closeSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const backdrop = document.getElementById('sidebar-backdrop');
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebarToggle = document.getElementById('sidebar-toggle');
+                const sidebarClose = document.getElementById('sidebar-close');
+
+                if (sidebarToggle) {
+                    sidebarToggle.addEventListener('click', openSidebar);
+                }
+
+                if (sidebarClose) {
+                    sidebarClose.addEventListener('click', closeSidebar);
+                }
             });
 
             // Global Toaster Function
