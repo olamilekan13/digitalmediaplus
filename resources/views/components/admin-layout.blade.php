@@ -25,11 +25,11 @@
         <div class="min-h-screen bg-gray-100">
             <!-- Mobile Sidebar Backdrop -->
             <div id="sidebar-backdrop"
-                 class="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 lg:hidden hidden transition-opacity duration-300"
+                 class="fixed inset-0 bg-gray-900 bg-opacity-50 z-[45] lg:hidden hidden transition-opacity duration-300"
                  onclick="document.getElementById('sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
 
             <!-- Sidebar -->
-            <div class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full" id="sidebar">
+            <div class="fixed inset-y-0 left-0 z-[60] w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full" id="sidebar">
                 <div class="flex items-center justify-center h-16 bg-gray-800">
                     <span class="text-white text-xl font-bold">Admin Panel</span>
                 </div>

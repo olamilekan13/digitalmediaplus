@@ -55,7 +55,8 @@ class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
             <div class="lg:hidden">
                 <button @click="mobileMenuOpen = !mobileMenuOpen"
                         type="button"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-900 hover:bg-gray-100 transition-colors duration-300">
+                        class="inline-flex items-center justify-center p-2 rounded-md bg-white shadow-md transition-colors duration-300"
+                        :class="{ 'text-gray-900 hover:bg-gray-100': scrolled, 'text-gray-900 hover:bg-gray-50': !scrolled }">
                     <span class="sr-only">Open main menu</span>
                     <!-- Hamburger Icon -->
                     <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
