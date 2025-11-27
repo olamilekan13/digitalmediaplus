@@ -7,18 +7,14 @@ x-init="window.addEventListener('scroll', () => { scrolled = window.pageYOffset 
 class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
-            <!-- Logo and Company Name -->
+            <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="#home" class="flex items-center space-x-3">
+                <a href="#home" class="flex items-center">
                     @if($siteSetting && $siteSetting->logo)
                         <img src="{{ Storage::url($siteSetting->logo) }}"
                              alt="{{ $siteSetting->company_name ?? 'Logo' }}"
                              class="h-12 w-auto">
                     @endif
-                    <span class="text-2xl font-bold transition-colors duration-300"
-                          :class="{ 'text-gray-900': scrolled, 'text-white': !scrolled }">
-                        {{ $siteSetting->company_name ?? config('app.name') }}
-                    </span>
                 </a>
             </div>
 
@@ -59,8 +55,7 @@ class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
             <div class="lg:hidden">
                 <button @click="mobileMenuOpen = !mobileMenuOpen"
                         type="button"
-                        class="inline-flex items-center justify-center p-2 rounded-md transition-colors duration-300"
-                        :class="{ 'text-gray-700 hover:bg-gray-100': scrolled, 'text-white hover:bg-white/10': !scrolled }">
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-900 hover:bg-gray-100 transition-colors duration-300">
                     <span class="sr-only">Open main menu</span>
                     <!-- Hamburger Icon -->
                     <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

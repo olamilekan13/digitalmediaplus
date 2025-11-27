@@ -23,6 +23,11 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
+            <!-- Mobile Sidebar Backdrop -->
+            <div id="sidebar-backdrop"
+                 class="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 lg:hidden hidden transition-opacity duration-300"
+                 onclick="document.getElementById('sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
+
             <!-- Sidebar -->
             <div class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full" id="sidebar">
                 <div class="flex items-center justify-center h-16 bg-gray-800">
@@ -174,7 +179,11 @@
         <!-- Mobile Sidebar Toggle -->
         <script>
             document.getElementById('sidebar-toggle')?.addEventListener('click', function() {
-                document.getElementById('sidebar').classList.toggle('-translate-x-full');
+                const sidebar = document.getElementById('sidebar');
+                const backdrop = document.getElementById('sidebar-backdrop');
+
+                sidebar.classList.toggle('-translate-x-full');
+                backdrop.classList.toggle('hidden');
             });
         </script>
 
