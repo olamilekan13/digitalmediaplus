@@ -192,7 +192,7 @@
 
         <!-- Sidebar Toggle Script -->
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            function initAdminSidebar() {
                 console.log('Admin sidebar script loaded');
 
                 const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -208,6 +208,11 @@
                     backdrop: !!backdrop,
                     mainContent: !!mainContent
                 });
+
+                if (!sidebarToggle || !sidebar) {
+                    console.error('Required sidebar elements not found!');
+                    return;
+                }
 
                 // Check if we're on desktop
                 function isDesktop() {
@@ -252,21 +257,17 @@
                 }
 
                 // Toggle button click
-                if (sidebarToggle) {
-                    sidebarToggle.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log('Toggle clicked, sidebar hidden:', sidebar.classList.contains('-translate-x-full'));
+                sidebarToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Toggle clicked, sidebar hidden:', sidebar.classList.contains('-translate-x-full'));
 
-                        if (sidebar.classList.contains('-translate-x-full')) {
-                            openSidebar();
-                        } else {
-                            closeSidebar();
-                        }
-                    });
-                } else {
-                    console.error('Sidebar toggle button not found!');
-                }
+                    if (sidebar.classList.contains('-translate-x-full')) {
+                        openSidebar();
+                    } else {
+                        closeSidebar();
+                    }
+                });
 
                 // Close button click
                 if (sidebarClose) {
@@ -297,7 +298,17 @@
                         }
                     }, 250);
                 });
-            });
+            }
+
+            // Initialize on DOMContentLoaded
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAdminSidebar);
+            } else {
+                initAdminSidebar();
+            }
+
+            // Also initialize on Livewire load
+            document.addEventListener('livewire:navigated', initAdminSidebar);
         </script>
 
         @livewireScripts
