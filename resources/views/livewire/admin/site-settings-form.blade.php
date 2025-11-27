@@ -343,60 +343,72 @@
 
 @push('scripts')
 <script>
+    let addressEditor, copyrightEditor;
+
+    document.addEventListener('livewire:initialized', function () {
+        initializeSiteSettingsCKEditor();
+    });
+
     document.addEventListener('livewire:navigated', function () {
-        initializeSiteSettingsTinyMCE();
+        initializeSiteSettingsCKEditor();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeSiteSettingsTinyMCE();
-    });
+    function initializeSiteSettingsCKEditor() {
+        setTimeout(() => {
+            if (typeof ClassicEditor !== 'undefined') {
+                // Address Editor
+                const addressElement = document.querySelector('#address');
+                if (addressElement) {
+                    if (addressEditor) {
+                        addressEditor.destroy().catch(error => console.log(error));
+                    }
 
-    function initializeSiteSettingsTinyMCE() {
-        if (typeof tinymce !== 'undefined') {
-            // Address editor
-            tinymce.remove('#address');
-            tinymce.init({
-                selector: '#address',
-                height: 150,
-                menubar: false,
-                plugins: 'lists link code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.address || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('address', editor.getContent());
-                    });
+                    ClassicEditor
+                        .create(addressElement, {
+                            toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        })
+                        .then(editor => {
+                            addressEditor = editor;
+                            const initialAddress = @this.get('address') || '';
+                            editor.setData(initialAddress);
+                            editor.model.document.on('change:data', () => {
+                                @this.set('address', editor.getData());
+                            });
+                        })
+                        .catch(error => console.error('CKEditor address error:', error));
                 }
-            });
 
-            // Copyright text editor
-            tinymce.remove('#copyright_text');
-            tinymce.init({
-                selector: '#copyright_text',
-                height: 150,
-                menubar: false,
-                plugins: 'lists link code wordcount',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat | code',
-                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.setContent(@this.copyright_text || '');
-                    });
-                    editor.on('blur', function () {
-                        @this.set('copyright_text', editor.getContent());
-                    });
+                // Copyright Text Editor
+                const copyrightElement = document.querySelector('#copyright_text');
+                if (copyrightElement) {
+                    if (copyrightEditor) {
+                        copyrightEditor.destroy().catch(error => console.log(error));
+                    }
+
+                    ClassicEditor
+                        .create(copyrightElement, {
+                            toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        })
+                        .then(editor => {
+                            copyrightEditor = editor;
+                            const initialCopyright = @this.get('copyright_text') || '';
+                            editor.setData(initialCopyright);
+                            editor.model.document.on('change:data', () => {
+                                @this.set('copyright_text', editor.getData());
+                            });
+                        })
+                        .catch(error => console.error('CKEditor copyright error:', error));
                 }
-            });
-        }
+            }
+        }, 100);
     }
 
     document.addEventListener('livewire:navigating', function () {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.remove('#address');
-            tinymce.remove('#copyright_text');
+        if (addressEditor) {
+            addressEditor.destroy().catch(error => console.log(error));
+        }
+        if (copyrightEditor) {
+            copyrightEditor.destroy().catch(error => console.log(error));
         }
     });
 </script>
