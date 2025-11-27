@@ -25,11 +25,11 @@
 
         <!-- Tagline with delayed fade-in -->
         @if($heroSection->tagline)
-            <p class="text-xl md:text-2xl lg:text-3xl mb-10 text-gray-800 transition-all duration-1000 transform delay-200"
-               :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
-               style="transition-delay: 200ms;">
-                {{ $heroSection->tagline }}
-            </p>
+            <div class="text-xl md:text-2xl lg:text-3xl mb-10 text-gray-800 transition-all duration-1000 transform delay-200 prose max-w-none"
+                 :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+                 style="transition-delay: 200ms;">
+                {!! $heroSection->tagline !!}
+            </div>
         @endif
 
         <!-- CTA Button with delayed slide-up -->

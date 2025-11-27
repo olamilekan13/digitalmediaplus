@@ -69,9 +69,9 @@
                              x-cloak>
                             <div class="px-6 pb-6 pt-2">
                                 <div class="pl-4 border-l-4 border-orange-400">
-                                    <p class="text-gray-700 leading-relaxed text-base md:text-lg">
-                                        {{ $faq->answer }}
-                                    </p>
+                                    <div class="text-gray-700 leading-relaxed text-base md:text-lg prose max-w-none">
+                                        {!! $faq->answer !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>

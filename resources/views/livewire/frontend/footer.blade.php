@@ -14,9 +14,11 @@
                     </h3>
                 </div>
                 @if($siteSetting && $siteSetting->address)
-                    <p class="text-sm">
-                        <i class="fas fa-map-marker-alt mr-2 text-orange-500"></i>
-                        {{ $siteSetting->address }}
+                    <p class="text-sm flex">
+                        <i class="fas fa-map-marker-alt mr-2 text-orange-500 mt-1"></i>
+                        <span class="prose prose-sm max-w-none text-gray-300">
+                            {!! $siteSetting->address !!}
+                        </span>
                     </p>
                 @endif
             </div>
@@ -130,8 +132,12 @@
 
         <!-- Copyright -->
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>
-                {{ $siteSetting->copyright_text ?? '© ' . date('Y') . ' ' . ($siteSetting->company_name ?? config('app.name')) . '. All rights reserved.' }}
+            <p class="prose prose-sm mx-auto max-w-3xl text-gray-400">
+                @if($siteSetting && $siteSetting->copyright_text)
+                    {!! $siteSetting->copyright_text !!}
+                @else
+                    {{ '© ' . date('Y') . ' ' . ($siteSetting->company_name ?? config('app.name')) . '. All rights reserved.' }}
+                @endif
             </p>
         </div>
     </div>

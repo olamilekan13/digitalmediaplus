@@ -40,9 +40,9 @@
                             </h3>
 
                             <!-- Full Description -->
-                            <p class="text-gray-600 leading-relaxed flex-grow">
-                                {{ $service->description }}
-                            </p>
+                            <div class="text-gray-600 leading-relaxed flex-grow prose prose-sm max-w-none">
+                                {!! $service->description !!}
+                            </div>
 
                             <!-- Optional Link/Button -->
                             <div class="mt-4 pt-4 border-t border-gray-100">

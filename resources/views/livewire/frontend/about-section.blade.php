@@ -20,19 +20,15 @@
 
                 <!-- Description -->
                 @if($aboutSection->description)
-                    <div class="prose prose-lg max-w-none mb-6">
-                        <p class="text-xl text-gray-700 leading-relaxed">
-                            {{ $aboutSection->description }}
-                        </p>
+                    <div class="prose prose-lg max-w-none mb-6 text-gray-700">
+                        {!! $aboutSection->description !!}
                     </div>
                 @endif
 
                 <!-- Story Text -->
                 @if($aboutSection->story_text)
-                    <div class="prose prose-lg max-w-none">
-                        <p class="text-gray-600 leading-relaxed">
-                            {{ $aboutSection->story_text }}
-                        </p>
+                    <div class="prose prose-lg max-w-none text-gray-600">
+                        {!! $aboutSection->story_text !!}
                     </div>
                 @endif
 
@@ -90,9 +86,9 @@
                             </h4>
 
                             <!-- Description -->
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                {{ $feature->description }}
-                            </p>
+                            <div class="text-gray-600 text-sm leading-relaxed prose prose-sm max-w-none">
+                                {!! $feature->description !!}
+                            </div>
                         </div>
                     </div>
                 @endforeach
