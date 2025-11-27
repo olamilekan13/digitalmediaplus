@@ -59,8 +59,8 @@
                 <ul class="space-y-3">
                     @foreach($contactChannels as $channel)
                         <li class="flex items-start">
-                            <i class="fas {{ $channel->icon ?? 'fa-info-circle' }} text-orange-500 mt-0.5 mr-3"></i>
-                            <span class="text-sm">{{ $channel->value }}</span>
+                            <i class="fas {{ $channel->icon ?? 'fa-info-circle' }} text-orange-500 mt-0.5 mr-3 flex-shrink-0"></i>
+                            <span class="text-sm break-words break-all">{{ $channel->value }}</span>
                         </li>
                     @endforeach
                 </ul>

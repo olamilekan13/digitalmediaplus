@@ -22,7 +22,7 @@ class ContactChannelsForm extends Component
     public $isEditMode = false;
 
     protected $rules = [
-        'channel_type' => 'required|in:skype,email,phone,whatsapp,kingschat',
+        'channel_type' => 'required|in:teams,email,phone,whatsapp,kingschat',
         'value' => 'required|string|max:255',
         'newIcon' => 'nullable|image|mimes:jpeg,jpg,png,svg,webp|max:2048',
         'order' => 'nullable|integer|min:0',

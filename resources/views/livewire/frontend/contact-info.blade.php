@@ -10,7 +10,7 @@
             @foreach($channels as $index => $channel)
                 @php
                     $channelIcons = [
-                        'skype' => 'fa-skype',
+                        'teams' => 'fa-microsoft',
                         'email' => 'fa-envelope',
                         'phone' => 'fa-phone',
                         'whatsapp' => 'fa-whatsapp',
@@ -18,7 +18,7 @@
                     ];
 
                     $channelLabels = [
-                        'skype' => 'Skype',
+                        'teams' => 'Teams',
                         'email' => 'Email',
                         'phone' => 'Phone',
                         'whatsapp' => 'WhatsApp',
@@ -26,7 +26,7 @@
                     ];
 
                     $channelColors = [
-                        'skype' => 'from-blue-400 to-blue-600',
+                        'teams' => 'from-blue-400 to-blue-600',
                         'email' => 'from-red-400 to-red-600',
                         'phone' => 'from-green-400 to-green-600',
                         'whatsapp' => 'from-green-500 to-green-700',
@@ -39,8 +39,8 @@
 
                     // Build URL based on channel type
                     switch ($channel->channel_type) {
-                        case 'skype':
-                            $url = 'skype:' . $channel->value . '?chat';
+                        case 'teams':
+                            $url = 'https://teams.microsoft.com/l/chat/0/0?users=' . $channel->value;
                             break;
                         case 'email':
                             $url = 'mailto:' . $channel->value;
@@ -77,11 +77,11 @@
                         </div>
 
                         <!-- Channel Info -->
-                        <div class="ml-4 flex-grow">
+                        <div class="ml-4 flex-grow min-w-0">
                             <p class="text-sm font-medium text-gray-500 group-hover:text-orange-600 transition-colors duration-300">
                                 {{ $label }}
                             </p>
-                            <p class="text-base font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
+                            <p class="text-base font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-300 break-words break-all">
                                 {{ $channel->value }}
                             </p>
                         </div>
