@@ -33,8 +33,8 @@
                 <div class="flex items-center justify-between h-16 bg-gray-800 px-4">
                     <span class="text-white text-xl font-bold">Admin Panel</span>
                     <!-- Close button for mobile/desktop -->
-                    <button id="sidebar-close" class="text-white hover:text-gray-300 transition-colors">
-                        <i class="fas fa-times text-xl"></i>
+                    <button id="sidebar-close" class="text-white hover:text-gray-300 transition-colors p-2">
+                        <i class="fas fa-times text-2xl"></i>
                     </button>
                 </div>
 
@@ -110,8 +110,8 @@
             <div id="main-content" class="transition-all duration-300">
                 <!-- Top Navigation -->
                 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-                    <button type="button" class="-m-2.5 p-2.5 text-gray-900" id="sidebar-toggle">
-                        <i class="fas fa-bars text-xl"></i>
+                    <button type="button" class="p-2 text-gray-900 hover:bg-gray-100 rounded-md transition-colors" id="sidebar-toggle">
+                        <i class="fas fa-bars text-2xl"></i>
                     </button>
 
                     <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
@@ -189,67 +189,63 @@
                 const backdrop = document.getElementById('sidebar-backdrop');
                 const mainContent = document.getElementById('main-content');
 
-                let isDesktop = window.innerWidth >= 1024;
-                let sidebarOpen = false;
-
-                // Initialize sidebar state
-                function initializeSidebar() {
-                    isDesktop = window.innerWidth >= 1024;
-
-                    if (isDesktop && !sidebarOpen) {
-                        // Desktop: open by default on first load
-                        openSidebar();
-                        sidebarOpen = true;
-                    } else if (!isDesktop) {
-                        // Mobile: always start closed
-                        closeSidebar();
-                        sidebarOpen = false;
-                    }
+                // Check if we're on desktop
+                function isDesktop() {
+                    return window.innerWidth >= 1024;
                 }
 
+                // Open sidebar
                 function openSidebar() {
                     sidebar.classList.remove('-translate-x-full');
 
-                    if (isDesktop) {
-                        // Desktop: push content
+                    if (isDesktop()) {
+                        // Desktop: push content to the right
                         mainContent.classList.add('lg:pl-64');
                         backdrop.classList.add('hidden');
                     } else {
                         // Mobile: show backdrop overlay
                         backdrop.classList.remove('hidden');
                     }
-
-                    sidebarOpen = true;
                 }
 
+                // Close sidebar
                 function closeSidebar() {
                     sidebar.classList.add('-translate-x-full');
                     backdrop.classList.add('hidden');
 
-                    if (isDesktop) {
+                    if (isDesktop()) {
+                        // Desktop: remove content padding
                         mainContent.classList.remove('lg:pl-64');
                     }
-
-                    sidebarOpen = false;
                 }
 
-                // Initialize on load
-                initializeSidebar();
+                // Initialize sidebar state on page load
+                if (isDesktop()) {
+                    // Desktop: open by default
+                    openSidebar();
+                } else {
+                    // Mobile: closed by default
+                    closeSidebar();
+                }
 
                 // Toggle button click
                 if (sidebarToggle) {
-                    sidebarToggle.addEventListener('click', function() {
-                        if (sidebarOpen) {
-                            closeSidebar();
-                        } else {
+                    sidebarToggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log('Toggle clicked'); // Debug log
+
+                        if (sidebar.classList.contains('-translate-x-full')) {
                             openSidebar();
+                        } else {
+                            closeSidebar();
                         }
                     });
                 }
 
                 // Close button click
                 if (sidebarClose) {
-                    sidebarClose.addEventListener('click', function() {
+                    sidebarClose.addEventListener('click', function(e) {
+                        e.preventDefault();
                         closeSidebar();
                     });
                 }
@@ -266,15 +262,10 @@
                 window.addEventListener('resize', function() {
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(function() {
-                        const wasDesktop = isDesktop;
-                        isDesktop = window.innerWidth >= 1024;
-
-                        // If switching from mobile to desktop, open sidebar
-                        if (!wasDesktop && isDesktop) {
+                        // Reset sidebar state on resize
+                        if (isDesktop()) {
                             openSidebar();
-                        }
-                        // If switching from desktop to mobile, close sidebar
-                        else if (wasDesktop && !isDesktop) {
+                        } else {
                             closeSidebar();
                         }
                     }, 250);
