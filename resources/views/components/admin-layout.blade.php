@@ -29,9 +29,13 @@
                  onclick="document.getElementById('sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
 
             <!-- Sidebar -->
-            <div class="fixed inset-y-0 left-0 z-[60] w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full" id="sidebar">
-                <div class="flex items-center justify-center h-16 bg-gray-800">
+            <div class="fixed inset-y-0 left-0 z-[60] w-64 bg-gray-900 transform transition-all duration-300 ease-in-out -translate-x-full lg:translate-x-0" id="sidebar">
+                <div class="flex items-center justify-between h-16 bg-gray-800 px-4">
                     <span class="text-white text-xl font-bold">Admin Panel</span>
+                    <!-- Close button for mobile/desktop -->
+                    <button id="sidebar-close" class="text-white lg:hidden">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
                 </div>
 
                 <nav class="mt-5 px-2 overflow-y-auto h-[calc(100vh-4rem)] pb-10">
@@ -103,10 +107,10 @@
             </div>
 
             <!-- Main Content -->
-            <div class="lg:pl-64">
+            <div id="main-content" class="lg:pl-64 transition-all duration-300">
                 <!-- Top Navigation -->
                 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-                    <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" id="sidebar-toggle">
+                    <button type="button" class="-m-2.5 p-2.5 text-gray-700" id="sidebar-toggle">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
 
@@ -176,14 +180,47 @@
         <!-- Alpine.js for dropdown -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-        <!-- Mobile Sidebar Toggle -->
+        <!-- Sidebar Toggle Script -->
         <script>
-            document.getElementById('sidebar-toggle')?.addEventListener('click', function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebarToggle = document.getElementById('sidebar-toggle');
+                const sidebarClose = document.getElementById('sidebar-close');
                 const sidebar = document.getElementById('sidebar');
                 const backdrop = document.getElementById('sidebar-backdrop');
+                const mainContent = document.getElementById('main-content');
 
-                sidebar.classList.toggle('-translate-x-full');
-                backdrop.classList.toggle('hidden');
+                function openSidebar() {
+                    sidebar.classList.remove('-translate-x-full');
+                    if (window.innerWidth < 1024) {
+                        backdrop.classList.remove('hidden');
+                    }
+                }
+
+                function closeSidebar() {
+                    sidebar.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                }
+
+                // Toggle button click
+                if (sidebarToggle) {
+                    sidebarToggle.addEventListener('click', function() {
+                        if (sidebar.classList.contains('-translate-x-full')) {
+                            openSidebar();
+                        } else {
+                            closeSidebar();
+                        }
+                    });
+                }
+
+                // Close button click
+                if (sidebarClose) {
+                    sidebarClose.addEventListener('click', closeSidebar);
+                }
+
+                // Backdrop click
+                if (backdrop) {
+                    backdrop.addEventListener('click', closeSidebar);
+                }
             });
         </script>
 
