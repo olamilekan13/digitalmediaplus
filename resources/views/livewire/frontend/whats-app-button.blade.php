@@ -1,4 +1,4 @@
-@if($whatsappNumber)
+@if($isEnabled && $whatsappNumber)
     <div class="fixed bottom-6 right-6 z-50">
         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $whatsappNumber) }}?text={{ urlencode($whatsappMessage) }}"
            target="_blank"

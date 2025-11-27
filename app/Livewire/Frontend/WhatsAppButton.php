@@ -2,23 +2,25 @@
 
 namespace App\Livewire\Frontend;
 
-use App\Models\ContactChannel;
+use App\Models\SiteSetting;
 use Livewire\Component;
 
 class WhatsAppButton extends Component
 {
+    public $siteSetting;
+    public $isEnabled = false;
     public $whatsappNumber;
     public $whatsappMessage;
 
     public function mount()
     {
-        // Get WhatsApp number from contact_channels table
-        $whatsappChannel = ContactChannel::where('channel_type', 'whatsapp')
-            ->where('is_active', true)
-            ->first();
+        $this->siteSetting = SiteSetting::first();
 
-        $this->whatsappNumber = $whatsappChannel?->value ?? null;
-        $this->whatsappMessage = 'Hello DigitalMediaPlus';
+        if ($this->siteSetting) {
+            $this->isEnabled = $this->siteSetting->whatsapp_chat_enabled;
+            $this->whatsappNumber = $this->siteSetting->whatsapp_business_number;
+            $this->whatsappMessage = $this->siteSetting->whatsapp_welcome_message ?? 'Hello! How can we help you today?';
+        }
     }
 
     public function render()

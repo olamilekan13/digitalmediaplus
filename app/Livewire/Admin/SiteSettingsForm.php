@@ -22,6 +22,9 @@ class SiteSettingsForm extends Component
     public $instagram_url;
     public $linkedin_url;
     public $youtube_url;
+    public $whatsapp_business_number;
+    public $whatsapp_chat_enabled;
+    public $whatsapp_welcome_message;
     public $primary_color;
     public $secondary_color;
     public $copyright_text;
@@ -39,6 +42,9 @@ class SiteSettingsForm extends Component
         'instagram_url' => 'nullable|url|max:255',
         'linkedin_url' => 'nullable|url|max:255',
         'youtube_url' => 'nullable|url|max:255',
+        'whatsapp_business_number' => 'nullable|string|max:20',
+        'whatsapp_chat_enabled' => 'nullable|boolean',
+        'whatsapp_welcome_message' => 'nullable|string|max:500',
         'primary_color' => 'nullable|string|max:7',
         'secondary_color' => 'nullable|string|max:7',
         'copyright_text' => 'nullable|string',
@@ -78,6 +84,9 @@ class SiteSettingsForm extends Component
         $this->instagram_url = $this->settings->instagram_url;
         $this->linkedin_url = $this->settings->linkedin_url;
         $this->youtube_url = $this->settings->youtube_url;
+        $this->whatsapp_business_number = $this->settings->whatsapp_business_number;
+        $this->whatsapp_chat_enabled = $this->settings->whatsapp_chat_enabled;
+        $this->whatsapp_welcome_message = $this->settings->whatsapp_welcome_message;
         $this->primary_color = $this->settings->primary_color;
         $this->secondary_color = $this->settings->secondary_color;
         $this->copyright_text = $this->settings->copyright_text;
@@ -118,6 +127,9 @@ class SiteSettingsForm extends Component
             'instagram_url' => $this->instagram_url,
             'linkedin_url' => $this->linkedin_url,
             'youtube_url' => $this->youtube_url,
+            'whatsapp_business_number' => $this->whatsapp_business_number,
+            'whatsapp_chat_enabled' => $this->whatsapp_chat_enabled ? true : false,
+            'whatsapp_welcome_message' => $this->whatsapp_welcome_message,
             'primary_color' => $this->primary_color,
             'secondary_color' => $this->secondary_color,
             'copyright_text' => $this->copyright_text,

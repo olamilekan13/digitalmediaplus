@@ -242,6 +242,75 @@
                 </div>
             </div>
 
+            <!-- WhatsApp Business -->
+            <div class="border-b border-gray-200 pb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fab fa-whatsapp mr-2 text-green-600"></i>
+                    WhatsApp Business
+                </h3>
+
+                <div class="space-y-6">
+                    <!-- WhatsApp Chat Enabled Toggle -->
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-1">
+                            <label for="whatsapp_chat_enabled" class="block text-sm font-medium text-gray-700">
+                                Enable WhatsApp Chat Widget
+                            </label>
+                            <p class="text-sm text-gray-500 mt-1">
+                                Display a WhatsApp chat button on your website for customer support
+                            </p>
+                        </div>
+                        <div class="ml-4">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox"
+                                       id="whatsapp_chat_enabled"
+                                       wire:model="whatsapp_chat_enabled"
+                                       class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Business Number -->
+                    <div>
+                        <label for="whatsapp_business_number" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fab fa-whatsapp text-green-600 mr-1"></i> WhatsApp Business Number
+                        </label>
+                        <input type="text"
+                               id="whatsapp_business_number"
+                               wire:model="whatsapp_business_number"
+                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                               placeholder="e.g., 1234567890 (include country code without + or spaces)">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter the phone number with country code (e.g., 1234567890 for +1 234 567 890)
+                        </p>
+                        @error('whatsapp_business_number')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- WhatsApp Welcome Message -->
+                    <div>
+                        <label for="whatsapp_welcome_message" class="block text-sm font-medium text-gray-700 mb-2">
+                            Welcome Message
+                        </label>
+                        <textarea id="whatsapp_welcome_message"
+                                  wire:model="whatsapp_welcome_message"
+                                  rows="3"
+                                  class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                  placeholder="Hello! How can we help you today?"></textarea>
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            This message will be pre-filled when customers click the WhatsApp button
+                        </p>
+                        @error('whatsapp_welcome_message')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
             <!-- Theme Colors -->
             <div class="border-b border-gray-200 pb-8">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
