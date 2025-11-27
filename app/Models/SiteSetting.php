@@ -24,4 +24,8 @@ class SiteSetting extends Model
         'secondary_color',
         'copyright_text',
     ];
+
+    protected $casts = [
+        'whatsapp_chat_enabled' => 'boolean',
+    ];
 }
