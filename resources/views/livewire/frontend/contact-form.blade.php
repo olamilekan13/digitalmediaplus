@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<form class="space-y-6" wire:submit.prevent="submit">
     <h3 class="text-2xl font-bold text-gray-900">Send Us a Message</h3>
     <p class="text-gray-600 leading-relaxed">
         Fill out the form below and we'll get back to you as soon as possible.
@@ -108,8 +108,7 @@
 
     <!-- Submit Button -->
     <div>
-        <button type="button"
-                wire:click="submit"
+        <button type="submit"
                 wire:loading.attr="disabled"
                 class="w-full px-8 py-4 bg-gradient-to-r from-orange-600 to-yellow-600 text-white text-lg font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center">
 
@@ -129,4 +128,4 @@
     <p class="text-xs text-gray-500 text-center">
         We respect your privacy. Your information will never be shared with third parties.
     </p>
-</div>
+</form>
