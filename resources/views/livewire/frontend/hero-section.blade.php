@@ -1,5 +1,5 @@
 <div>
-<section id="home" class="relative min-h-screen flex items-center justify-center {{ $heroSection && $heroSection->background_image ? '' : 'bg-gradient-to-br from-orange-600 to-yellow-600' }}">
+<section id="home" class="relative min-h-screen flex items-center justify-center {{ $heroSection && $heroSection->background_image ? '' : 'bg-gradient-to-br from-sky-400 to-sky-600' }}">
     @if($heroSection)
         <!-- Background Image -->
         @if($heroSection->background_image)
@@ -7,7 +7,7 @@
                 <img src="{{ Storage::url($heroSection->background_image) }}"
                      alt="Hero Background"
                      class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-br from-orange-600/40 to-yellow-600/40"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-sky-400/40 to-sky-600/40"></div>
             </div>
         @endif
 
