@@ -3,9 +3,12 @@
 namespace App\Livewire\Frontend;
 
 use App\Models\ContactMessage;
+use App\Models\SiteSetting;
 use App\Models\User;
+use App\Mail\ContactFormMail;
 use App\Notifications\NewContactMessage;
 use Livewire\Component;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
 class ContactForm extends Component
@@ -45,7 +48,21 @@ class ContactForm extends Component
         // Save to database
         $contactMessage = ContactMessage::create($validatedData);
 
-        // Send email notification to all admin users
+        // Get site settings email
+        $siteSetting = SiteSetting::first();
+        $recipientEmail = $siteSetting && $siteSetting->email ? $siteSetting->email : null;
+
+        // Send email to the site settings email address
+        if ($recipientEmail) {
+            try {
+                Mail::to($recipientEmail)->send(new ContactFormMail($contactMessage));
+            } catch (\Exception $e) {
+                // Log error but don't fail the form submission
+                \Log::error('Failed to send contact form email: ' . $e->getMessage());
+            }
+        }
+
+        // Also send email notification to all admin users as backup
         $admins = User::where('is_admin', true)->get();
         if ($admins->count() > 0) {
             Notification::send($admins, new NewContactMessage($contactMessage));
