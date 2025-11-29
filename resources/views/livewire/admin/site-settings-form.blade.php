@@ -168,13 +168,17 @@
                     <!-- Facebook -->
                     <div>
                         <label for="facebook_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fab fa-facebook text-blue-600 mr-1"></i> Facebook URL
+                            <i class="fab fa-facebook text-blue-600 mr-1"></i> Facebook Username/User ID
                         </label>
-                        <input type="url"
+                        <input type="text"
                                id="facebook_url"
                                wire:model="facebook_url"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                               placeholder="https://facebook.com/yourpage">
+                               placeholder="e.g., yourpage or userid123">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter your Facebook username or user ID
+                        </p>
                         @error('facebook_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -183,13 +187,17 @@
                     <!-- Twitter -->
                     <div>
                         <label for="twitter_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fab fa-twitter text-blue-400 mr-1"></i> Twitter URL
+                            <i class="fab fa-twitter text-blue-400 mr-1"></i> Twitter Username/User ID
                         </label>
-                        <input type="url"
+                        <input type="text"
                                id="twitter_url"
                                wire:model="twitter_url"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                               placeholder="https://twitter.com/yourhandle">
+                               placeholder="e.g., yourhandle or userid123">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter your Twitter username or user ID
+                        </p>
                         @error('twitter_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -198,13 +206,17 @@
                     <!-- Instagram -->
                     <div>
                         <label for="instagram_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fab fa-instagram text-pink-600 mr-1"></i> Instagram URL
+                            <i class="fab fa-instagram text-pink-600 mr-1"></i> Instagram Username/User ID
                         </label>
-                        <input type="url"
+                        <input type="text"
                                id="instagram_url"
                                wire:model="instagram_url"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                               placeholder="https://instagram.com/yourhandle">
+                               placeholder="e.g., yourhandle or userid123">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter your Instagram username or user ID
+                        </p>
                         @error('instagram_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -213,13 +225,17 @@
                     <!-- LinkedIn -->
                     <div>
                         <label for="linkedin_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fab fa-linkedin text-blue-700 mr-1"></i> LinkedIn URL
+                            <i class="fab fa-linkedin text-blue-700 mr-1"></i> LinkedIn Username/User ID
                         </label>
-                        <input type="url"
+                        <input type="text"
                                id="linkedin_url"
                                wire:model="linkedin_url"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                               placeholder="https://linkedin.com/company/yourcompany">
+                               placeholder="e.g., company/yourcompany or in/username">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter your LinkedIn username or user ID
+                        </p>
                         @error('linkedin_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -228,13 +244,17 @@
                     <!-- YouTube -->
                     <div>
                         <label for="youtube_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fab fa-youtube text-red-600 mr-1"></i> YouTube URL
+                            <i class="fab fa-youtube text-red-600 mr-1"></i> YouTube Username/Channel ID
                         </label>
-                        <input type="url"
+                        <input type="text"
                                id="youtube_url"
                                wire:model="youtube_url"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                               placeholder="https://youtube.com/c/yourchannel">
+                               placeholder="e.g., @yourchannel or channelid123">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter your YouTube username or channel ID
+                        </p>
                         @error('youtube_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -262,13 +282,17 @@
                     <!-- Telegram -->
                     <div class="md:col-span-2">
                         <label for="telegram_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fab fa-telegram text-blue-500 mr-1"></i> Telegram URL
+                            <i class="fab fa-telegram text-blue-500 mr-1"></i> Telegram Username/User ID
                         </label>
-                        <input type="url"
+                        <input type="text"
                                id="telegram_url"
                                wire:model="telegram_url"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                               placeholder="https://t.me/yourchannel">
+                               placeholder="e.g., yourchannel or userid123">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enter your Telegram username or user ID
+                        </p>
                         @error('telegram_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror

@@ -75,49 +75,104 @@
                 <h4 class="text-white font-semibold mb-4">Follow Us</h4>
                 <div class="flex space-x-4">
                     @if($siteSetting && $siteSetting->facebook_url)
-                        <a href="{{ $siteSetting->facebook_url }}"
+                        @php
+                            $facebookUrl = $siteSetting->facebook_url;
+                            if (!filter_var($facebookUrl, FILTER_VALIDATE_URL)) {
+                                $facebookUrl = 'https://facebook.com/' . ltrim($facebookUrl, '/');
+                            }
+                        @endphp
+                        <a href="{{ $facebookUrl }}"
                            target="_blank"
                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     @endif
                     @if($siteSetting && $siteSetting->twitter_url)
-                        <a href="{{ $siteSetting->twitter_url }}"
+                        @php
+                            $twitterUrl = $siteSetting->twitter_url;
+                            if (!filter_var($twitterUrl, FILTER_VALIDATE_URL)) {
+                                $twitterUrl = 'https://twitter.com/' . ltrim($twitterUrl, '/');
+                            }
+                        @endphp
+                        <a href="{{ $twitterUrl }}"
                            target="_blank"
                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
                             <i class="fab fa-twitter"></i>
                         </a>
                     @endif
                     @if($siteSetting && $siteSetting->instagram_url)
-                        <a href="{{ $siteSetting->instagram_url }}"
+                        @php
+                            $instagramUrl = $siteSetting->instagram_url;
+                            if (!filter_var($instagramUrl, FILTER_VALIDATE_URL)) {
+                                $instagramUrl = 'https://instagram.com/' . ltrim($instagramUrl, '/');
+                            }
+                        @endphp
+                        <a href="{{ $instagramUrl }}"
                            target="_blank"
                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
                             <i class="fab fa-instagram"></i>
                         </a>
                     @endif
                     @if($siteSetting && $siteSetting->linkedin_url)
-                        <a href="{{ $siteSetting->linkedin_url }}"
+                        @php
+                            $linkedinUrl = $siteSetting->linkedin_url;
+                            if (!filter_var($linkedinUrl, FILTER_VALIDATE_URL)) {
+                                // Handle different LinkedIn URL formats
+                                if (strpos($linkedinUrl, 'company/') === 0 || strpos($linkedinUrl, 'in/') === 0) {
+                                    $linkedinUrl = 'https://linkedin.com/' . ltrim($linkedinUrl, '/');
+                                } else {
+                                    $linkedinUrl = 'https://linkedin.com/in/' . ltrim($linkedinUrl, '/');
+                                }
+                            }
+                        @endphp
+                        <a href="{{ $linkedinUrl }}"
                            target="_blank"
                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     @endif
                     @if($siteSetting && $siteSetting->youtube_url)
-                        <a href="{{ $siteSetting->youtube_url }}"
+                        @php
+                            $youtubeUrl = $siteSetting->youtube_url;
+                            if (!filter_var($youtubeUrl, FILTER_VALIDATE_URL)) {
+                                // Handle YouTube channel formats
+                                if (strpos($youtubeUrl, '@') === 0) {
+                                    $youtubeUrl = 'https://youtube.com/' . ltrim($youtubeUrl, '/');
+                                } elseif (strpos($youtubeUrl, 'channel/') === 0 || strpos($youtubeUrl, 'c/') === 0 || strpos($youtubeUrl, 'user/') === 0) {
+                                    $youtubeUrl = 'https://youtube.com/' . ltrim($youtubeUrl, '/');
+                                } else {
+                                    $youtubeUrl = 'https://youtube.com/@' . ltrim($youtubeUrl, '/');
+                                }
+                            }
+                        @endphp
+                        <a href="{{ $youtubeUrl }}"
                            target="_blank"
                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
                             <i class="fab fa-youtube"></i>
                         </a>
                     @endif
                     @if($siteSetting && $siteSetting->teams_url)
-                        <a href="{{ $siteSetting->teams_url }}"
+                        @php
+                            $teamsUrl = $siteSetting->teams_url;
+                            if (!filter_var($teamsUrl, FILTER_VALIDATE_URL)) {
+                                // Microsoft Teams format
+                                $teamsUrl = 'https://teams.microsoft.com/l/chat/0/0?users=' . urlencode($teamsUrl);
+                            }
+                        @endphp
+                        <a href="{{ $teamsUrl }}"
                            target="_blank"
                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
                             <i class="fab fa-microsoft"></i>
                         </a>
                     @endif
                     @if($siteSetting && $siteSetting->telegram_url)
-                        <a href="{{ $siteSetting->telegram_url }}"
+                        @php
+                            $telegramUrl = $siteSetting->telegram_url;
+                            if (!filter_var($telegramUrl, FILTER_VALIDATE_URL)) {
+                                $telegramUrl = 'https://t.me/' . ltrim($telegramUrl, '/');
+                            }
+                        @endphp
+                        <a href="{{ $telegramUrl }}"
                            target="_blank"
                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
                             <i class="fab fa-telegram"></i>

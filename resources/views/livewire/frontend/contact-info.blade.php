@@ -6,7 +6,7 @@
 
     @if($channels->count() > 0)
         <!-- Contact Channels Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 gap-4">
             @foreach($channels as $index => $channel)
                 @php
                     $channelIcons = [
@@ -67,28 +67,28 @@
                    class="group"
                    x-data="{ shown: false }"
                    x-intersect="shown = true">
-                    <div class="flex items-center p-4 bg-white rounded-lg border border-gray-200 hover:border-orange-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                    <div class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-orange-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                          :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
                          style="transition-delay: {{ $index * 100 }}ms;">
 
                         <!-- Icon -->
-                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br {{ $gradient }} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                            <i class="fab {{ $icon }} text-white text-xl"></i>
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-br {{ $gradient }} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i class="fab {{ $icon }} text-white text-xs"></i>
                         </div>
 
-                        <!-- Channel Info -->
-                        <div class="ml-4 flex-grow min-w-0">
-                            <p class="text-sm font-medium text-gray-500 group-hover:text-orange-600 transition-colors duration-300">
-                                {{ $label }}
-                            </p>
-                            <p class="text-base font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-300 break-words break-all">
+                        <!-- Channel Info - Single Line -->
+                        <div class="ml-3 flex-grow flex items-center gap-2 min-w-0">
+                            <span class="text-xs font-medium text-gray-500 group-hover:text-orange-600 transition-colors duration-300 whitespace-nowrap flex-shrink-0">
+                                {{ $label }}:
+                            </span>
+                            <span class="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-300 whitespace-nowrap">
                                 {{ $channel->value }}
-                            </p>
+                            </span>
                         </div>
 
                         <!-- Arrow Icon -->
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-arrow-right text-gray-400 group-hover:text-orange-600 transform group-hover:translate-x-1 transition-all duration-300"></i>
+                        <div class="flex-shrink-0 ml-2">
+                            <i class="fas fa-arrow-right text-gray-400 group-hover:text-orange-600 transform group-hover:translate-x-1 transition-all duration-300 text-xs"></i>
                         </div>
                     </div>
                 </a>
