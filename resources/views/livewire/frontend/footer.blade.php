@@ -9,9 +9,6 @@
                              alt="{{ $siteSetting->company_name ?? 'Logo' }}"
                              class="h-10 w-auto">
                     @endif
-                    <h3 class="text-xl font-bold text-white">
-                        {{ $siteSetting->company_name ?? config('app.name') }}
-                    </h3>
                 </div>
                 @if($siteSetting && $siteSetting->address)
                     <p class="text-sm flex">
