@@ -107,6 +107,17 @@
                             @endif
                         </a>
                     </div>
+
+                    <!-- Admin Management (Super Admin Only) -->
+                    @if(auth()->check() && auth()->user()->isSuperAdmin())
+                    <div class="mt-4">
+                        <h3 class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">System</h3>
+                        <a href="{{ route('admin.admin-users.index') }}" class="group flex items-center px-2 py-2 mt-1 text-sm font-medium rounded-md {{ request()->routeIs('admin.admin-users.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                            <i class="fas fa-users-cog mr-3"></i>
+                            Admin Management
+                        </a>
+                    </div>
+                    @endif
                 </nav>
             </div>
 
@@ -114,9 +125,6 @@
             <div id="main-content" class="transition-all duration-300">
                 <!-- Top Navigation -->
                 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-                    <!-- TEST: This should be visible -->
-                    <div class="text-red-600 font-bold">MENU</div>
-
                     <!-- Hamburger Menu Button - Always Visible -->
                     <button type="button"
                             class="flex items-center justify-center w-10 h-10 p-2 text-gray-900 bg-white hover:bg-gray-100 rounded-md border border-gray-300 transition-colors"

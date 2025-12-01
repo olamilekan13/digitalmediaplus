@@ -86,6 +86,21 @@ class StatisticForm extends Component
 
     public function save()
     {
+        // Check permissions
+        if ($this->isEditMode) {
+            // For editing, check if user has manage or edit permission
+            if (!auth()->user()->hasPermission('manage_statistics') && !auth()->user()->hasPermission('edit_statistics')) {
+                session()->flash('error', 'You do not have permission to edit statistics.');
+                return redirect()->route('admin.statistics.index');
+            }
+        } else {
+            // For creating, check if user has manage permission
+            if (!auth()->user()->hasPermission('manage_statistics')) {
+                session()->flash('error', 'You do not have permission to create statistics.');
+                return redirect()->route('admin.statistics.index');
+            }
+        }
+
         $this->validate();
 
         $data = [

@@ -89,6 +89,21 @@ class TestimonialForm extends Component
 
     public function save()
     {
+        // Check permissions
+        if ($this->isEditMode) {
+            // For editing, check if user has manage or edit permission
+            if (!auth()->user()->hasPermission('manage_testimonials') && !auth()->user()->hasPermission('edit_testimonials')) {
+                session()->flash('error', 'You do not have permission to edit testimonials.');
+                return redirect()->route('admin.testimonials.index');
+            }
+        } else {
+            // For creating, check if user has manage permission
+            if (!auth()->user()->hasPermission('manage_testimonials')) {
+                session()->flash('error', 'You do not have permission to create testimonials.');
+                return redirect()->route('admin.testimonials.index');
+            }
+        }
+
         $this->validate();
 
         $data = [

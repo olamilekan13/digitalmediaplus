@@ -47,6 +47,14 @@ class FeatureHighlightsTable extends Component
 
     public function deleteFeature()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_feature_highlights')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete feature highlights.', type: 'error');
+            $this->featureToDelete = null;
+            $this->showDeleteModal = false;
+            return;
+        }
+
         if ($this->featureToDelete) {
             $feature = FeatureHighlight::findOrFail($this->featureToDelete);
 

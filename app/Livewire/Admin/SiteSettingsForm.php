@@ -123,6 +123,12 @@ class SiteSettingsForm extends Component
 
     public function save()
     {
+        // Check permission - SiteSettings is always in edit mode (single record)
+        if (!auth()->user()->hasPermission('manage_site_settings')) {
+            session()->flash('error', 'You do not have permission to edit site settings.');
+            return redirect()->route('admin.site-settings.index');
+        }
+
         $this->validate();
 
         $data = [

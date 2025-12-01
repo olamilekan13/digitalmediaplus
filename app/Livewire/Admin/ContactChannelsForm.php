@@ -59,6 +59,21 @@ class ContactChannelsForm extends Component
 
     public function save()
     {
+        // Check permissions
+        if ($this->isEditMode) {
+            // For editing, check if user has manage or edit permission
+            if (!auth()->user()->hasPermission('manage_contact_channels') && !auth()->user()->hasPermission('edit_contact_channels')) {
+                session()->flash('error', 'You do not have permission to edit contact channels.');
+                return redirect()->route('admin.contact-channels.index');
+            }
+        } else {
+            // For creating, check if user has manage permission
+            if (!auth()->user()->hasPermission('manage_contact_channels')) {
+                session()->flash('error', 'You do not have permission to create contact channels.');
+                return redirect()->route('admin.contact-channels.index');
+            }
+        }
+
         $this->validate();
 
         $data = [

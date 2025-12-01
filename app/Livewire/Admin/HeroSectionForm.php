@@ -96,6 +96,12 @@ class HeroSectionForm extends Component
 
     public function save()
     {
+        // Check permission - HeroSection is always in edit mode (single record)
+        if (!auth()->user()->hasPermission('manage_hero_sections') && !auth()->user()->hasPermission('edit_hero_sections')) {
+            session()->flash('error', 'You do not have permission to edit hero sections.');
+            return redirect()->route('admin.hero-sections.index');
+        }
+
         $this->validate();
 
         $data = [

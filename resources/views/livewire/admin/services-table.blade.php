@@ -10,11 +10,13 @@
                     </h2>
                     <p class="text-green-100 mt-1">Manage all your services and offerings</p>
                 </div>
+                @if(auth()->user()->hasPermission('manage_services'))
                 <a href="{{ route('admin.services.create') }}"
                    class="bg-white text-green-700 px-6 py-2.5 rounded-lg font-semibold hover:bg-green-50 transition flex items-center shadow-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Create Service
                 </a>
+                @endif
             </div>
         </div>
 
@@ -55,6 +57,7 @@
                         {{ count($selectedServices) }} service(s) selected
                     </span>
                     <div class="flex items-center space-x-2">
+                        @if(auth()->user()->hasPermission('manage_services') || auth()->user()->hasPermission('edit_services'))
                         <button wire:click="bulkActivate"
                                 class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">
                             <i class="fas fa-check mr-1"></i> Activate
@@ -63,11 +66,14 @@
                                 class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-lg hover:bg-yellow-700 transition">
                             <i class="fas fa-ban mr-1"></i> Deactivate
                         </button>
+                        @endif
+                        @if(auth()->user()->hasPermission('manage_services'))
                         <button wire:click="bulkDelete"
                                 class="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition"
                                 onclick="return confirm('Are you sure you want to delete the selected services?')">
                             <i class="fas fa-trash mr-1"></i> Delete
                         </button>
+                        @endif
                     </div>
                 </div>
             @endif
@@ -163,35 +169,53 @@
 
                                 <!-- Featured Toggle -->
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if(auth()->user()->hasPermission('manage_services') || auth()->user()->hasPermission('edit_services'))
                                     <button wire:click="toggleFeatured({{ $service->id }})"
                                             class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium transition {{ $service->is_featured ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                                         <i class="fas fa-star mr-1"></i>
                                         {{ $service->is_featured ? 'Featured' : 'Standard' }}
                                     </button>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium {{ $service->is_featured ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-600' }}">
+                                        <i class="fas fa-star mr-1"></i>
+                                        {{ $service->is_featured ? 'Featured' : 'Standard' }}
+                                    </span>
+                                    @endif
                                 </td>
 
                                 <!-- Status Toggle -->
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if(auth()->user()->hasPermission('manage_services') || auth()->user()->hasPermission('edit_services'))
                                     <button wire:click="toggleActive({{ $service->id }})"
                                             class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium transition {{ $service->is_active ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200' }}">
                                         <i class="fas fa-circle mr-1 text-xs"></i>
                                         {{ $service->is_active ? 'Active' : 'Inactive' }}
                                     </button>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium {{ $service->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        <i class="fas fa-circle mr-1 text-xs"></i>
+                                        {{ $service->is_active ? 'Active' : 'Inactive' }}
+                                    </span>
+                                    @endif
                                 </td>
 
                                 <!-- Actions -->
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end space-x-2">
+                                        @if(auth()->user()->hasPermission('manage_services') || auth()->user()->hasPermission('edit_services'))
                                         <a href="{{ route('admin.services.edit', $service->id) }}"
                                            class="text-blue-600 hover:text-blue-900 transition"
                                            title="Edit">
                                             <i class="fas fa-edit text-lg"></i>
                                         </a>
+                                        @endif
+                                        @if(auth()->user()->hasPermission('manage_services'))
                                         <button wire:click="confirmDelete({{ $service->id }})"
                                                 class="text-red-600 hover:text-red-900 transition"
                                                 title="Delete">
                                             <i class="fas fa-trash text-lg"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -216,7 +240,7 @@
                         Get started by creating your first service.
                     @endif
                 </p>
-                @if(!$search && $filterStatus === 'all')
+                @if(!$search && $filterStatus === 'all' && auth()->user()->hasPermission('manage_services'))
                     <a href="{{ route('admin.services.create') }}"
                        class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition">
                         <i class="fas fa-plus mr-2"></i>

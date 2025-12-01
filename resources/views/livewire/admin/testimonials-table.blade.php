@@ -10,11 +10,13 @@
                     </h2>
                     <p class="text-pink-100 mt-1">Manage customer testimonials and reviews</p>
                 </div>
+                @if(auth()->user()->hasPermission('manage_testimonials'))
                 <a href="{{ route('admin.testimonials.create') }}"
                    class="bg-white text-pink-700 px-6 py-2.5 rounded-lg font-semibold hover:bg-pink-50 transition flex items-center shadow-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Create Testimonial
                 </a>
+                @endif
             </div>
         </div>
 
@@ -54,6 +56,7 @@
                         {{ count($selectedTestimonials) }} testimonial(s) selected
                     </span>
                     <div class="flex items-center space-x-2">
+                        @if(auth()->user()->hasPermission('manage_testimonials') || auth()->user()->hasPermission('edit_testimonials'))
                         <button wire:click="bulkActivate"
                                 class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">
                             <i class="fas fa-check mr-1"></i> Activate
@@ -62,11 +65,14 @@
                                 class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-lg hover:bg-yellow-700 transition">
                             <i class="fas fa-ban mr-1"></i> Deactivate
                         </button>
+                        @endif
+                        @if(auth()->user()->hasPermission('manage_testimonials'))
                         <button wire:click="bulkDelete"
                                 class="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition"
                                 onclick="return confirm('Are you sure you want to delete the selected testimonials?')">
                             <i class="fas fa-trash mr-1"></i> Delete
                         </button>
+                        @endif
                     </div>
                 </div>
             @endif
@@ -157,26 +163,37 @@
 
                                 <!-- Status Toggle -->
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if(auth()->user()->hasPermission('manage_testimonials') || auth()->user()->hasPermission('edit_testimonials'))
                                     <button wire:click="toggleActive({{ $testimonial->id }})"
                                             class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium transition {{ $testimonial->is_active ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200' }}">
                                         <i class="fas fa-circle mr-1 text-xs"></i>
                                         {{ $testimonial->is_active ? 'Active' : 'Inactive' }}
                                     </button>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium {{ $testimonial->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        <i class="fas fa-circle mr-1 text-xs"></i>
+                                        {{ $testimonial->is_active ? 'Active' : 'Inactive' }}
+                                    </span>
+                                    @endif
                                 </td>
 
                                 <!-- Actions -->
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end space-x-2">
+                                        @if(auth()->user()->hasPermission('manage_testimonials') || auth()->user()->hasPermission('edit_testimonials'))
                                         <a href="{{ route('admin.testimonials.edit', $testimonial->id) }}"
                                            class="text-blue-600 hover:text-blue-900 transition"
                                            title="Edit">
                                             <i class="fas fa-edit text-lg"></i>
                                         </a>
+                                        @endif
+                                        @if(auth()->user()->hasPermission('manage_testimonials'))
                                         <button wire:click="confirmDelete({{ $testimonial->id }})"
                                                 class="text-red-600 hover:text-red-900 transition"
                                                 title="Delete">
                                             <i class="fas fa-trash text-lg"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -201,7 +218,7 @@
                         Get started by adding your first customer testimonial.
                     @endif
                 </p>
-                @if(!$search && $filterStatus === 'all')
+                @if(!$search && $filterStatus === 'all' && auth()->user()->hasPermission('manage_testimonials'))
                     <a href="{{ route('admin.testimonials.create') }}"
                        class="inline-flex items-center px-6 py-3 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition">
                         <i class="fas fa-plus mr-2"></i>

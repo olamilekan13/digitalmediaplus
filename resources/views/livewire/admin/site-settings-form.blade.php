@@ -27,12 +27,14 @@
                                 <img src="{{ Storage::url($currentLogo) }}"
                                      alt="Current Logo"
                                      class="w-32 h-32 object-contain border-2 border-gray-300 rounded-lg bg-gray-50 p-2">
+                                @if(auth()->user()->hasPermission('manage_site_settings') || auth()->user()->hasPermission('edit_site_settings'))
                                 <button type="button"
                                         wire:click="removeLogo"
                                         wire:confirm="Are you sure you want to remove the logo?"
                                         class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition">
                                     <i class="fas fa-times text-xs"></i>
                                 </button>
+                                @endif
                             </div>
                         @elseif ($newLogo)
                             <div class="relative">
@@ -443,6 +445,7 @@
             </div>
 
             <!-- Action Buttons -->
+            @if(auth()->user()->hasPermission('manage_site_settings') || auth()->user()->hasPermission('edit_site_settings'))
             <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
                 <button type="button"
                         onclick="window.location.href='{{ route('admin.dashboard') }}'"
@@ -464,6 +467,14 @@
                     </span>
                 </button>
             </div>
+            @else
+            <div class="pt-6 border-t border-gray-200">
+                <p class="text-center text-gray-600">
+                    <i class="fas fa-lock mr-2"></i>
+                    You do not have permission to edit site settings.
+                </p>
+            </div>
+            @endif
         </form>
     </div>
 </div>

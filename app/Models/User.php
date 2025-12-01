@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'role_id',
     ];
 
     /**
@@ -46,5 +47,62 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
         ];
+    }
+
+    /**
+     * Get the role that belongs to the user
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Check if user has a specific role
+     */
+    public function hasRole(string $slug): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+
+        return $this->role->slug === $slug;
+    }
+
+    /**
+     * Check if user has any of the given roles
+     */
+    public function hasAnyRole(array $slugs): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+
+        return in_array($this->role->slug, $slugs);
+    }
+
+    /**
+     * Check if user has a specific permission
+     */
+    public function hasPermission(string $permission): bool
+    {
+        // Super Admin has all permissions
+        if ($this->hasRole('super-admin')) {
+            return true;
+        }
+
+        if (!$this->role) {
+            return false;
+        }
+
+        return $this->role->hasPermission($permission);
+    }
+
+    /**
+     * Check if user is super admin
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole('super-admin');
     }
 }

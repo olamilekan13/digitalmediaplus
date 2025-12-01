@@ -49,6 +49,21 @@ class FaqForm extends Component
 
     public function save()
     {
+        // Check permissions
+        if ($this->isEditMode) {
+            // For editing, check if user has manage or edit permission
+            if (!auth()->user()->hasPermission('manage_faqs') && !auth()->user()->hasPermission('edit_faqs')) {
+                session()->flash('error', 'You do not have permission to edit FAQs.');
+                return redirect()->route('admin.faqs.index');
+            }
+        } else {
+            // For creating, check if user has manage permission
+            if (!auth()->user()->hasPermission('manage_faqs')) {
+                session()->flash('error', 'You do not have permission to create FAQs.');
+                return redirect()->route('admin.faqs.index');
+            }
+        }
+
         $this->validate();
 
         $data = [

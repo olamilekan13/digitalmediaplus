@@ -20,6 +20,9 @@ class StatisticController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->hasPermission('manage_statistics')) {
+            abort(403, 'You do not have permission to create statistics.');
+        }
         return view('admin.statistics.create');
     }
 
@@ -44,6 +47,9 @@ class StatisticController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->hasPermission('manage_statistics') && !auth()->user()->hasPermission('edit_statistics')) {
+            abort(403, 'You do not have permission to edit statistics.');
+        }
         return view('admin.statistics.edit', ['statisticId' => $id]);
     }
 

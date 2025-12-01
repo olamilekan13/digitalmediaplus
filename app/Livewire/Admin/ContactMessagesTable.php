@@ -67,6 +67,14 @@ class ContactMessagesTable extends Component
 
     public function deleteMessage()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_contact_messages')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete contact messages.', type: 'error');
+            $this->messageToDelete = null;
+            $this->showDeleteModal = false;
+            return;
+        }
+
         if ($this->messageToDelete) {
             ContactMessage::findOrFail($this->messageToDelete)->delete();
             $this->dispatch('notify', message: 'Message deleted successfully.', type: 'success');
@@ -93,6 +101,12 @@ class ContactMessagesTable extends Component
 
     public function bulkDelete()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_contact_messages')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete contact messages.', type: 'error');
+            return;
+        }
+
         if (empty($this->selectedMessages)) {
             $this->dispatch('notify', message: 'Please select messages to delete.', type: 'error');
             return;

@@ -20,6 +20,9 @@ class FeatureHighlightController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->hasPermission('manage_feature_highlights')) {
+            abort(403, 'You do not have permission to create feature highlights.');
+        }
         return view('admin.feature-highlights.create');
     }
 
@@ -44,6 +47,9 @@ class FeatureHighlightController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->hasPermission('manage_feature_highlights') && !auth()->user()->hasPermission('edit_feature_highlights')) {
+            abort(403, 'You do not have permission to edit feature highlights.');
+        }
         return view('admin.feature-highlights.edit', ['featureId' => $id]);
     }
 

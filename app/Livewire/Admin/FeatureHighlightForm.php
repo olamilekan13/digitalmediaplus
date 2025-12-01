@@ -84,6 +84,21 @@ class FeatureHighlightForm extends Component
 
     public function save()
     {
+        // Check permissions
+        if ($this->isEditMode) {
+            // For editing, check if user has manage or edit permission
+            if (!auth()->user()->hasPermission('manage_feature_highlights') && !auth()->user()->hasPermission('edit_feature_highlights')) {
+                session()->flash('error', 'You do not have permission to edit feature highlights.');
+                return redirect()->route('admin.feature-highlights.index');
+            }
+        } else {
+            // For creating, check if user has manage permission
+            if (!auth()->user()->hasPermission('manage_feature_highlights')) {
+                session()->flash('error', 'You do not have permission to create feature highlights.');
+                return redirect()->route('admin.feature-highlights.index');
+            }
+        }
+
         $this->validate();
 
         $data = [

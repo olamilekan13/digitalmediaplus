@@ -21,6 +21,9 @@ class ServiceController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->hasPermission('manage_services')) {
+            abort(403, 'You do not have permission to create services.');
+        }
         return view('admin.services.create');
     }
 
@@ -45,6 +48,9 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->hasPermission('manage_services') && !auth()->user()->hasPermission('edit_services')) {
+            abort(403, 'You do not have permission to edit services.');
+        }
         return view('admin.services.edit', ['serviceId' => $id]);
     }
 

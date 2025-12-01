@@ -21,6 +21,9 @@ class TestimonialController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->hasPermission('manage_testimonials')) {
+            abort(403, 'You do not have permission to create testimonials.');
+        }
         return view('admin.testimonials.create');
     }
 
@@ -45,6 +48,9 @@ class TestimonialController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->hasPermission('manage_testimonials') && !auth()->user()->hasPermission('edit_testimonials')) {
+            abort(403, 'You do not have permission to edit testimonials.');
+        }
         return view('admin.testimonials.edit', ['testimonialId' => $id]);
     }
 

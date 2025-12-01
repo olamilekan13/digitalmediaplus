@@ -21,6 +21,9 @@ class FaqController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->hasPermission('manage_faqs')) {
+            abort(403, 'You do not have permission to create FAQs.');
+        }
         return view('admin.faqs.create');
     }
 
@@ -45,6 +48,9 @@ class FaqController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->hasPermission('manage_faqs') && !auth()->user()->hasPermission('edit_faqs')) {
+            abort(403, 'You do not have permission to edit FAQs.');
+        }
         return view('admin.faqs.edit', ['faqId' => $id]);
     }
 

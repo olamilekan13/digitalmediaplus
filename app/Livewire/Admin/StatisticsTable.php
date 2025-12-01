@@ -47,6 +47,14 @@ class StatisticsTable extends Component
 
     public function deleteStatistic()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_statistics')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete statistics.', type: 'error');
+            $this->statisticToDelete = null;
+            $this->showDeleteModal = false;
+            return;
+        }
+
         if ($this->statisticToDelete) {
             $statistic = Statistic::findOrFail($this->statisticToDelete);
 

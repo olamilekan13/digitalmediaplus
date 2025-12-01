@@ -48,6 +48,14 @@ class FaqsTable extends Component
 
     public function deleteFaq()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_faqs')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete FAQs.', type: 'error');
+            $this->faqToDelete = null;
+            $this->showDeleteModal = false;
+            return;
+        }
+
         if ($this->faqToDelete) {
             $faq = Faq::findOrFail($this->faqToDelete);
             $faq->delete();
@@ -85,6 +93,12 @@ class FaqsTable extends Component
 
     public function bulkDelete()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_faqs')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete FAQs.', type: 'error');
+            return;
+        }
+
         if (empty($this->selectedFaqs)) {
             $this->dispatch('notify', message: 'Please select FAQs to delete.', type: 'error');
             return;

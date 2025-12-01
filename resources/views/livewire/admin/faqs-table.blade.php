@@ -10,11 +10,13 @@
                     </h2>
                     <p class="text-indigo-100 mt-1">Manage frequently asked questions</p>
                 </div>
+                @if(auth()->user()->hasPermission('manage_faqs'))
                 <a href="{{ route('admin.faqs.create') }}"
                    class="bg-white text-indigo-700 px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-50 transition flex items-center shadow-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Create FAQ
                 </a>
+                @endif
             </div>
         </div>
 
@@ -53,6 +55,7 @@
                         {{ count($selectedFaqs) }} FAQ(s) selected
                     </span>
                     <div class="flex items-center space-x-2">
+                        @if(auth()->user()->hasPermission('manage_faqs') || auth()->user()->hasPermission('edit_faqs'))
                         <button wire:click="bulkActivate"
                                 class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">
                             <i class="fas fa-check mr-1"></i> Activate
@@ -61,11 +64,14 @@
                                 class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-lg hover:bg-yellow-700 transition">
                             <i class="fas fa-ban mr-1"></i> Deactivate
                         </button>
+                        @endif
+                        @if(auth()->user()->hasPermission('manage_faqs'))
                         <button wire:click="bulkDelete"
                                 class="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition"
                                 onclick="return confirm('Are you sure you want to delete the selected FAQs?')">
                             <i class="fas fa-trash mr-1"></i> Delete
                         </button>
+                        @endif
                     </div>
                 </div>
             @endif
@@ -126,24 +132,35 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    @if(auth()->user()->hasPermission('manage_faqs') || auth()->user()->hasPermission('edit_faqs'))
                                     <button wire:click="toggleActive({{ $faq->id }})"
                                             class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition {{ $faq->is_active ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-gray-100 text-gray-800 hover:bg-gray-200' }}">
                                         <i class="fas fa-{{ $faq->is_active ? 'check-circle' : 'times-circle' }} mr-1"></i>
                                         {{ $faq->is_active ? 'Active' : 'Inactive' }}
                                     </button>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $faq->is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                                        <i class="fas fa-{{ $faq->is_active ? 'check-circle' : 'times-circle' }} mr-1"></i>
+                                        {{ $faq->is_active ? 'Active' : 'Inactive' }}
+                                    </span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end space-x-2">
+                                        @if(auth()->user()->hasPermission('manage_faqs') || auth()->user()->hasPermission('edit_faqs'))
                                         <a href="{{ route('admin.faqs.edit', $faq->id) }}"
                                            class="text-indigo-600 hover:text-indigo-900 transition p-2 rounded-lg hover:bg-indigo-50"
                                            title="Edit FAQ">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endif
+                                        @if(auth()->user()->hasPermission('manage_faqs'))
                                         <button wire:click="confirmDelete({{ $faq->id }})"
                                                 class="text-red-600 hover:text-red-900 transition p-2 rounded-lg hover:bg-red-50"
                                                 title="Delete FAQ">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -167,7 +184,7 @@
                         Get started by creating your first FAQ.
                     @endif
                 </p>
-                @if(!$search)
+                @if(!$search && auth()->user()->hasPermission('manage_faqs'))
                     <a href="{{ route('admin.faqs.create') }}"
                        class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
                         <i class="fas fa-plus mr-2"></i>

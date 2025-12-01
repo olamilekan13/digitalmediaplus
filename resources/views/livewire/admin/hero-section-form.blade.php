@@ -226,6 +226,7 @@
             </div>
 
             <!-- Action Buttons -->
+            @if(auth()->user()->hasPermission('manage_hero_sections') || auth()->user()->hasPermission('edit_hero_sections'))
             <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
                 <button type="button"
                         onclick="window.location.href='{{ route('admin.dashboard') }}'"
@@ -247,6 +248,14 @@
                     </span>
                 </button>
             </div>
+            @else
+            <div class="pt-6 border-t border-gray-200">
+                <p class="text-center text-gray-600">
+                    <i class="fas fa-lock mr-2"></i>
+                    You do not have permission to edit the Hero section.
+                </p>
+            </div>
+            @endif
         </form>
     </div>
 </div>

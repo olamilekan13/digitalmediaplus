@@ -53,6 +53,14 @@ class ContactChannelsTable extends Component
 
     public function deleteChannel()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_contact_channels')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete contact channels.', type: 'error');
+            $this->channelToDelete = null;
+            $this->showDeleteModal = false;
+            return;
+        }
+
         if ($this->channelToDelete) {
             $channel = ContactChannel::findOrFail($this->channelToDelete);
 

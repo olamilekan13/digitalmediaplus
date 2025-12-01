@@ -77,6 +77,12 @@ class AboutSectionForm extends Component
 
     public function save()
     {
+        // Check permission - AboutSection is always in edit mode (single record)
+        if (!auth()->user()->hasPermission('manage_about_sections') && !auth()->user()->hasPermission('edit_about_sections')) {
+            session()->flash('error', 'You do not have permission to edit about sections.');
+            return redirect()->route('admin.about-sections.index');
+        }
+
         $this->validate();
 
         $data = [

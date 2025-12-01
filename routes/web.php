@@ -36,6 +36,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Contact Management
     Route::resource('contact-channels', App\Http\Controllers\Admin\ContactChannelController::class);
     Route::resource('contact-messages', App\Http\Controllers\Admin\ContactMessageController::class);
+
+    // Admin Management (Super Admin only)
+    Route::middleware('role:super-admin')->group(function () {
+        Route::resource('admin-users', App\Http\Controllers\Admin\AdminUserController::class);
+    });
 });
 
 require __DIR__.'/auth.php';

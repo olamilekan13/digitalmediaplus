@@ -10,11 +10,13 @@
                     </h2>
                     <p class="text-cyan-100 mt-1">Manage your performance metrics and statistics</p>
                 </div>
+                @if(auth()->user()->hasPermission('manage_statistics'))
                 <a href="{{ route('admin.statistics.create') }}"
                    class="bg-white text-cyan-700 px-6 py-2.5 rounded-lg font-semibold hover:bg-cyan-50 transition flex items-center shadow-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Create Statistic
                 </a>
+                @endif
             </div>
         </div>
 
@@ -122,26 +124,37 @@
 
                                 <!-- Status Toggle -->
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if(auth()->user()->hasPermission('manage_statistics') || auth()->user()->hasPermission('edit_statistics'))
                                     <button wire:click="toggleActive({{ $statistic->id }})"
                                             class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium transition {{ $statistic->is_active ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200' }}">
                                         <i class="fas fa-circle mr-1 text-xs"></i>
                                         {{ $statistic->is_active ? 'Active' : 'Inactive' }}
                                     </button>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium {{ $statistic->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        <i class="fas fa-circle mr-1 text-xs"></i>
+                                        {{ $statistic->is_active ? 'Active' : 'Inactive' }}
+                                    </span>
+                                    @endif
                                 </td>
 
                                 <!-- Actions -->
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end space-x-2">
+                                        @if(auth()->user()->hasPermission('manage_statistics') || auth()->user()->hasPermission('edit_statistics'))
                                         <a href="{{ route('admin.statistics.edit', $statistic->id) }}"
                                            class="text-blue-600 hover:text-blue-900 transition"
                                            title="Edit">
                                             <i class="fas fa-edit text-lg"></i>
                                         </a>
+                                        @endif
+                                        @if(auth()->user()->hasPermission('manage_statistics'))
                                         <button wire:click="confirmDelete({{ $statistic->id }})"
                                                 class="text-red-600 hover:text-red-900 transition"
                                                 title="Delete">
                                             <i class="fas fa-trash text-lg"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -166,7 +179,7 @@
                         Get started by creating your first statistic metric.
                     @endif
                 </p>
-                @if(!$search && $filterStatus === 'all')
+                @if(!$search && $filterStatus === 'all' && auth()->user()->hasPermission('manage_statistics'))
                     <a href="{{ route('admin.statistics.create') }}"
                        class="inline-flex items-center px-6 py-3 bg-cyan-600 text-white rounded-lg font-semibold hover:bg-cyan-700 transition">
                         <i class="fas fa-plus mr-2"></i>

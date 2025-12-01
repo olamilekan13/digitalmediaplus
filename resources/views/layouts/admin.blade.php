@@ -107,6 +107,17 @@
                             @endif
                         </a>
                     </div>
+
+                    <!-- Admin Management (Super Admin Only) -->
+                    @if(auth()->check() && auth()->user()->isSuperAdmin())
+                    <div class="mt-4">
+                        <h3 class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">System</h3>
+                        <a href="{{ route('admin.admin-users.index') }}" class="group flex items-center px-2 py-2 mt-1 text-sm font-medium rounded-md {{ request()->routeIs('admin.admin-users.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                            <i class="fas fa-users-cog mr-3"></i>
+                            Admin Management
+                        </a>
+                    </div>
+                    @endif
                 </nav>
             </div>
 

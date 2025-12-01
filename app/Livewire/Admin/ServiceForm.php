@@ -97,6 +97,21 @@ class ServiceForm extends Component
 
     public function save()
     {
+        // Check permissions
+        if ($this->isEditMode) {
+            // For editing, check if user has manage or edit permission
+            if (!auth()->user()->hasPermission('manage_services') && !auth()->user()->hasPermission('edit_services')) {
+                session()->flash('error', 'You do not have permission to edit services.');
+                return redirect()->route('admin.services.index');
+            }
+        } else {
+            // For creating, check if user has manage permission
+            if (!auth()->user()->hasPermission('manage_services')) {
+                session()->flash('error', 'You do not have permission to create services.');
+                return redirect()->route('admin.services.index');
+            }
+        }
+
         // Update validation rules for edit mode
         if ($this->isEditMode) {
             $this->rules['slug'] = 'required|string|max:255|unique:services,slug,' . $this->serviceId;

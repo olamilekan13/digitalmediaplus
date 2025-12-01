@@ -15,7 +15,7 @@
                     </h2>
                     <p class="text-purple-100 mt-1">Manage customer inquiries and messages</p>
                 </div>
-                @if($unreadCount > 0)
+                @if($unreadCount > 0 && auth()->user()->hasPermission('manage_contact_messages'))
                     <button wire:click="markAllAsRead"
                             wire:confirm="Are you sure you want to mark all messages as read?"
                             class="bg-white text-purple-700 px-6 py-2.5 rounded-lg font-semibold hover:bg-purple-50 transition flex items-center shadow-lg">
@@ -61,6 +61,7 @@
                         {{ count($selectedMessages) }} message(s) selected
                     </span>
                     <div class="flex items-center space-x-2">
+                        @if(auth()->user()->hasPermission('manage_contact_messages'))
                         <button wire:click="bulkMarkAsRead"
                                 class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">
                             <i class="fas fa-envelope-open mr-1"></i> Mark Read
@@ -74,6 +75,7 @@
                                 onclick="return confirm('Are you sure you want to delete the selected messages?')">
                             <i class="fas fa-trash mr-1"></i> Delete
                         </button>
+                        @endif
                     </div>
                 </div>
             @endif
@@ -122,12 +124,19 @@
                                            class="rounded border-gray-300 text-purple-600 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    @if(auth()->user()->hasPermission('manage_contact_messages'))
                                     <button wire:click="toggleRead({{ $message->id }})"
                                             class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition {{ $message->is_read ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' }}"
                                             title="Click to toggle status">
                                         <i class="fas fa-{{ $message->is_read ? 'envelope-open' : 'envelope' }} mr-1"></i>
                                         {{ $message->is_read ? 'Read' : 'Unread' }}
                                     </button>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $message->is_read ? 'bg-gray-100 text-gray-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                        <i class="fas fa-{{ $message->is_read ? 'envelope-open' : 'envelope' }} mr-1"></i>
+                                        {{ $message->is_read ? 'Read' : 'Unread' }}
+                                    </span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
@@ -167,11 +176,13 @@
                                                 title="View Full Message">
                                             <i class="fas fa-eye"></i>
                                         </button>
+                                        @if(auth()->user()->hasPermission('manage_contact_messages'))
                                         <button wire:click="confirmDelete({{ $message->id }})"
                                                 class="text-red-600 hover:text-red-900 transition p-2 rounded-lg hover:bg-red-50"
                                                 title="Delete Message">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -290,11 +301,15 @@
 
                 <!-- Modal Footer -->
                 <div class="bg-gray-50 px-6 py-4 rounded-b-lg border-t border-gray-200 flex justify-between">
+                    @if(auth()->user()->hasPermission('manage_contact_messages'))
                     <button wire:click="confirmDelete({{ $selectedMessage->id }})"
                             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium flex items-center">
                         <i class="fas fa-trash mr-2"></i>
                         Delete Message
                     </button>
+                    @else
+                    <div></div>
+                    @endif
                     <button wire:click="closeViewModal"
                             class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium">
                         Close

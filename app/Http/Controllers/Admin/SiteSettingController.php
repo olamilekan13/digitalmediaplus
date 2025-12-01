@@ -16,6 +16,10 @@ class SiteSettingController extends Controller
 
     public function update(Request $request, SiteSetting $siteSetting)
     {
+        if (!auth()->user()->hasPermission('manage_site_settings')) {
+            abort(403, 'You do not have permission to update site settings.');
+        }
+
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'logo' => 'nullable|image|max:2048',

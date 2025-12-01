@@ -10,11 +10,13 @@
                     </h2>
                     <p class="text-blue-100 mt-1">Manage customer contact channels</p>
                 </div>
+                @if(auth()->user()->hasPermission('manage_contact_channels'))
                 <a href="{{ route('admin.contact-channels.create') }}"
                    class="bg-white text-blue-700 px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-50 transition flex items-center shadow-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Add Channel
                 </a>
+                @endif
             </div>
         </div>
 
@@ -141,24 +143,35 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    @if(auth()->user()->hasPermission('manage_contact_channels') || auth()->user()->hasPermission('edit_contact_channels'))
                                     <button wire:click="toggleActive({{ $channel->id }})"
                                             class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition {{ $channel->is_active ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-gray-100 text-gray-800 hover:bg-gray-200' }}">
                                         <i class="fas fa-{{ $channel->is_active ? 'check-circle' : 'times-circle' }} mr-1"></i>
                                         {{ $channel->is_active ? 'Active' : 'Inactive' }}
                                     </button>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $channel->is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                                        <i class="fas fa-{{ $channel->is_active ? 'check-circle' : 'times-circle' }} mr-1"></i>
+                                        {{ $channel->is_active ? 'Active' : 'Inactive' }}
+                                    </span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end space-x-2">
+                                        @if(auth()->user()->hasPermission('manage_contact_channels') || auth()->user()->hasPermission('edit_contact_channels'))
                                         <a href="{{ route('admin.contact-channels.edit', $channel->id) }}"
                                            class="text-blue-600 hover:text-blue-900 transition p-2 rounded-lg hover:bg-blue-50"
                                            title="Edit Channel">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endif
+                                        @if(auth()->user()->hasPermission('manage_contact_channels'))
                                         <button wire:click="confirmDelete({{ $channel->id }})"
                                                 class="text-red-600 hover:text-red-900 transition p-2 rounded-lg hover:bg-red-50"
                                                 title="Delete Channel">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -182,7 +195,7 @@
                         Get started by adding your first contact channel.
                     @endif
                 </p>
-                @if(!$search)
+                @if(!$search && auth()->user()->hasPermission('manage_contact_channels'))
                     <a href="{{ route('admin.contact-channels.create') }}"
                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                         <i class="fas fa-plus mr-2"></i>

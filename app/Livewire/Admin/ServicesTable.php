@@ -57,6 +57,14 @@ class ServicesTable extends Component
 
     public function deleteService()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_services')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete services.', type: 'error');
+            $this->serviceToDelete = null;
+            $this->showDeleteModal = false;
+            return;
+        }
+
         if ($this->serviceToDelete) {
             $service = Service::findOrFail($this->serviceToDelete);
 
@@ -100,6 +108,12 @@ class ServicesTable extends Component
 
     public function bulkDelete()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_services')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete services.', type: 'error');
+            return;
+        }
+
         if (empty($this->selectedServices)) {
             $this->dispatch('notify', message: 'Please select services to delete.', type: 'error');
             return;

@@ -49,6 +49,14 @@ class TestimonialsTable extends Component
 
     public function deleteTestimonial()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_testimonials')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete testimonials.', type: 'error');
+            $this->testimonialToDelete = null;
+            $this->showDeleteModal = false;
+            return;
+        }
+
         if ($this->testimonialToDelete) {
             $testimonial = Testimonial::findOrFail($this->testimonialToDelete);
 
@@ -92,6 +100,12 @@ class TestimonialsTable extends Component
 
     public function bulkDelete()
     {
+        // Check permission
+        if (!auth()->user()->hasPermission('manage_testimonials')) {
+            $this->dispatch('notify', message: 'You do not have permission to delete testimonials.', type: 'error');
+            return;
+        }
+
         if (empty($this->selectedTestimonials)) {
             $this->dispatch('notify', message: 'Please select testimonials to delete.', type: 'error');
             return;
