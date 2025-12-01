@@ -28,7 +28,15 @@
                         <!-- Icon/Image Section -->
                         <div class="flex-shrink-0">
                             <div class="w-24 h-24 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                                <i class="fas {{ $service->icon ?? 'fa-cog' }} text-orange-600 text-4xl"></i>
+                                @if($service->icon)
+                                    @if(Str::startsWith($service->icon, 'fa-'))
+                                        <i class="fas {{ $service->icon }} text-orange-600 text-4xl"></i>
+                                    @else
+                                        <img src="{{ Storage::url($service->icon) }}" alt="{{ $service->title }}" class="w-16 h-16 object-contain">
+                                    @endif
+                                @else
+                                    <i class="fas fa-cog text-orange-600 text-4xl"></i>
+                                @endif
                             </div>
                         </div>
 
