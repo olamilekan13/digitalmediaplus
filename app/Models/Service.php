@@ -16,6 +16,8 @@ class Service extends Model
         'slug',
         'description',
         'icon',
+        'link',
+        'link_opens_new_tab',
         'is_featured',
         'order',
         'is_active',
@@ -24,6 +26,7 @@ class Service extends Model
     protected $casts = [
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
+        'link_opens_new_tab' => 'boolean',
     ];
 
     public function getActivitylogOptions(): LogOptions

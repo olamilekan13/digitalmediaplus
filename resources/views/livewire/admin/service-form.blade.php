@@ -153,6 +153,44 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <!-- Link URL -->
+                    <div>
+                        <label for="link" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-link mr-1"></i> Get Started Button Link
+                        </label>
+                        <input type="url"
+                               id="link"
+                               wire:model="link"
+                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                               placeholder="https://example.com/service-page">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            URL where the "Get Started" button will redirect users
+                        </p>
+                        @error('link')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Link Opens in New Tab Toggle -->
+                    <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <div>
+                            <label for="link_opens_new_tab" class="text-sm font-medium text-gray-900 flex items-center">
+                                <i class="fas fa-external-link-alt text-green-600 mr-2"></i>
+                                Open Link in New Tab
+                            </label>
+                            <p class="text-xs text-gray-600 mt-1">
+                                When enabled, the "Get Started" button will open in a new browser tab
+                            </p>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox"
+                                   id="link_opens_new_tab"
+                                   wire:model="link_opens_new_tab"
+                                   class="h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded cursor-pointer">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -272,6 +310,18 @@
                 ClassicEditor
                     .create(descriptionElement, {
                         toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link'],
+                        link: {
+                            decorators: {
+                                openInNewTab: {
+                                    mode: 'manual',
+                                    label: 'Open in a new tab',
+                                    attributes: {
+                                        target: '_blank',
+                                        rel: 'noopener noreferrer'
+                                    }
+                                }
+                            }
+                        }
                     })
                     .then(editor => {
                         serviceDescriptionEditor = editor;

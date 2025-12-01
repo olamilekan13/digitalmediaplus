@@ -19,6 +19,8 @@ class ServiceForm extends Component
     public $description;
     public $newIcon;
     public $currentIcon;
+    public $link;
+    public $link_opens_new_tab = false;
     public $is_featured = false;
     public $order = 0;
     public $is_active = true;
@@ -29,6 +31,8 @@ class ServiceForm extends Component
         'slug' => 'required|string|max:255|unique:services,slug',
         'description' => 'required|string|max:1000',
         'newIcon' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,svg,webp',
+        'link' => 'nullable|url|max:255',
+        'link_opens_new_tab' => 'boolean',
         'is_featured' => 'boolean',
         'order' => 'nullable|integer|min:0',
         'is_active' => 'boolean',
@@ -55,6 +59,8 @@ class ServiceForm extends Component
             $this->title = $this->service->title;
             $this->slug = $this->service->slug;
             $this->description = $this->service->description;
+            $this->link = $this->service->link;
+            $this->link_opens_new_tab = $this->service->link_opens_new_tab;
             $this->is_featured = $this->service->is_featured;
             $this->order = $this->service->order ?? 0;
             $this->is_active = $this->service->is_active;
@@ -123,6 +129,8 @@ class ServiceForm extends Component
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
+            'link' => $this->link,
+            'link_opens_new_tab' => $this->link_opens_new_tab,
             'is_featured' => $this->is_featured,
             'order' => $this->order,
             'is_active' => $this->is_active,
