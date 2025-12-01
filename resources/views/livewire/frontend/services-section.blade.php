@@ -43,16 +43,14 @@
                         </p>
 
                         <!-- Learn More Link (appears on hover) -->
-                        @if($service->link)
                         <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <a href="{{ $service->link }}"
-                               @if($service->link_opens_new_tab) target="_blank" rel="noopener noreferrer" @endif
+                            <a href="{{ $service->link ?: '#contact' }}"
+                               @if($service->link && $service->link_opens_new_tab) target="_blank" rel="noopener noreferrer" @endif
                                class="inline-flex items-center text-orange-600 font-semibold hover:text-orange-700">
                                 Get Started
                                 <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
                             </a>
                         </div>
-                        @endif
                     </div>
                 </div>
             @endforeach
