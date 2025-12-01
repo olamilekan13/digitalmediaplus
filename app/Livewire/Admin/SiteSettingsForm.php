@@ -16,6 +16,7 @@ class SiteSettingsForm extends Component
     public $logo;
     public $phone;
     public $email;
+    public $contact_form_email;
     public $address;
     public $facebook_url;
     public $twitter_url;
@@ -38,6 +39,7 @@ class SiteSettingsForm extends Component
         'newLogo' => 'nullable|image|max:2048|mimes:jpg,jpeg,png',
         'phone' => 'nullable|string|max:255',
         'email' => 'nullable|email|max:255',
+        'contact_form_email' => 'nullable|email|max:255',
         'address' => 'nullable|string|max:500',
         'facebook_url' => 'nullable|string|max:255',
         'twitter_url' => 'nullable|string|max:255',
@@ -84,6 +86,7 @@ class SiteSettingsForm extends Component
         $this->company_name = $this->settings->company_name;
         $this->phone = $this->settings->phone;
         $this->email = $this->settings->email;
+        $this->contact_form_email = $this->settings->contact_form_email;
         $this->address = $this->settings->address;
         $this->facebook_url = $this->settings->facebook_url;
         $this->twitter_url = $this->settings->twitter_url;
@@ -135,6 +138,7 @@ class SiteSettingsForm extends Component
             'company_name' => $this->company_name,
             'phone' => $this->phone,
             'email' => $this->email,
+            'contact_form_email' => $this->contact_form_email,
             'address' => $this->address,
             'facebook_url' => $this->facebook_url,
             'twitter_url' => $this->twitter_url,

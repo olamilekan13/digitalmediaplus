@@ -11,6 +11,7 @@ class SiteSetting extends Model
         'logo',
         'phone',
         'email',
+        'contact_form_email',
         'address',
         'facebook_url',
         'twitter_url',

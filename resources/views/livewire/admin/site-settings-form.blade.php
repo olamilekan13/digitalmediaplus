@@ -114,14 +114,37 @@
                     <!-- Email -->
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-envelope mr-1"></i> Email
+                            <i class="fas fa-envelope mr-1"></i> Company Email
                         </label>
                         <input type="email"
                                id="email"
                                wire:model="email"
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                placeholder="company@example.com">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            General company email address
+                        </p>
                         @error('email')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Contact Form Email -->
+                    <div>
+                        <label for="contact_form_email" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-paper-plane mr-1"></i> Contact Form Email
+                        </label>
+                        <input type="email"
+                               id="contact_form_email"
+                               wire:model="contact_form_email"
+                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                               placeholder="contact@example.com">
+                        <p class="mt-1 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Email address where contact form submissions will be sent
+                        </p>
+                        @error('contact_form_email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
