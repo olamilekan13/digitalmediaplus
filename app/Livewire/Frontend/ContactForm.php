@@ -48,9 +48,11 @@ class ContactForm extends Component
         // Save to database
         $contactMessage = ContactMessage::create($validatedData);
 
-        // Get site settings email
+        // Get site settings contact form email (with fallback to company email)
         $siteSetting = SiteSetting::first();
-        $recipientEmail = $siteSetting && $siteSetting->email ? $siteSetting->email : null;
+        $recipientEmail = $siteSetting && $siteSetting->contact_form_email
+            ? $siteSetting->contact_form_email
+            : ($siteSetting && $siteSetting->email ? $siteSetting->email : null);
 
         // Send email to the site settings email address
         if ($recipientEmail) {
