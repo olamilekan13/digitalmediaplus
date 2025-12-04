@@ -72,8 +72,16 @@
                          style="transition-delay: {{ $index * 100 }}ms;">
 
                         <!-- Icon -->
-                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-br {{ $gradient }} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                            <i class="fab {{ $icon }} text-white text-xs"></i>
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-br {{ $gradient }} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                            @if($channel->icon && !Str::startsWith($channel->icon, 'fa-'))
+                                {{-- Custom uploaded icon --}}
+                                <img src="{{ asset('storage/' . $channel->icon) }}"
+                                     alt="{{ $label }} icon"
+                                     class="w-full h-full object-contain p-1">
+                            @else
+                                {{-- FontAwesome icon (default or stored) --}}
+                                <i class="fab {{ $channel->icon ?: $icon }} text-white text-xs"></i>
+                            @endif
                         </div>
 
                         <!-- Channel Info - Single Line -->

@@ -58,12 +58,30 @@
                 <ul class="space-y-3">
                     @foreach($contactChannels as $channel)
                         @php
-                            $iconClass = $channel->icon ?? 'fa-info-circle';
+                            // Default FontAwesome icons
+                            $channelIcons = [
+                                'teams' => 'fa-microsoft',
+                                'email' => 'fa-envelope',
+                                'phone' => 'fa-phone',
+                                'whatsapp' => 'fa-whatsapp',
+                                'kingschat' => 'fa-comment-dots',
+                            ];
+                            $defaultIcon = $channelIcons[$channel->channel_type] ?? 'fa-info-circle';
                             $brandIconTypes = ['whatsapp', 'teams'];
                             $iconPrefix = in_array($channel->channel_type, $brandIconTypes) ? 'fab' : 'fas';
                         @endphp
                         <li class="flex items-start">
-                            <i class="{{ $iconPrefix }} {{ $iconClass }} text-orange-500 mt-0.5 mr-3 flex-shrink-0"></i>
+                            @if($channel->icon && !Str::startsWith($channel->icon, 'fa-'))
+                                {{-- Custom uploaded icon --}}
+                                <div class="flex-shrink-0 w-5 h-5 mr-3 mt-0.5">
+                                    <img src="{{ asset('storage/' . $channel->icon) }}"
+                                         alt="{{ $channel->channel_type }} icon"
+                                         class="w-full h-full object-contain brightness-0 invert opacity-80">
+                                </div>
+                            @else
+                                {{-- FontAwesome icon --}}
+                                <i class="{{ $iconPrefix }} {{ $channel->icon ?: $defaultIcon }} text-orange-500 mt-0.5 mr-3 flex-shrink-0"></i>
+                            @endif
                             <span class="text-sm break-words break-all">{{ $channel->value }}</span>
                         </li>
                     @endforeach

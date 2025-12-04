@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center h-20">
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="#home" class="flex items-center">
+                <a href="{{ url('/') }}" class="flex items-center">
                     @if($siteSetting && $siteSetting->logo)
                         <img src="{{ Storage::url($siteSetting->logo) }}"
                              alt="{{ $siteSetting->company_name ?? 'Logo' }}"
@@ -14,27 +14,27 @@
 
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex lg:items-center lg:space-x-8">
-                <a href="#home"
+                <a href="{{ url('/#home') }}"
                    class="nav-link font-medium text-gray-700 transition-colors duration-300 hover:text-orange-600">
                     Home
                 </a>
-                <a href="#about"
+                <a href="{{ url('/#about') }}"
                    class="nav-link font-medium text-gray-700 transition-colors duration-300 hover:text-orange-600">
                     About
                 </a>
-                <a href="#services"
+                <a href="{{ url('/#services') }}"
                    class="nav-link font-medium text-gray-700 transition-colors duration-300 hover:text-orange-600">
                     Services
                 </a>
-                <a href="#testimonials"
+                <a href="{{ url('/#testimonials') }}"
                    class="nav-link font-medium text-gray-700 transition-colors duration-300 hover:text-orange-600">
                     Testimonials
                 </a>
-                <a href="#faq"
+                <a href="{{ url('/#faq') }}"
                    class="nav-link font-medium text-gray-700 transition-colors duration-300 hover:text-orange-600">
                     FAQ
                 </a>
-                <a href="#contact"
+                <a href="{{ url('/#contact') }}"
                    class="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition shadow-lg">
                     Contact Us
                 </a>
@@ -62,27 +62,27 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden lg:hidden bg-white shadow-lg">
         <div class="px-4 pt-2 pb-6 space-y-2">
-            <a href="#home"
+            <a href="{{ url('/#home') }}"
                class="mobile-menu-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium transition">
                 Home
             </a>
-            <a href="#about"
+            <a href="{{ url('/#about') }}"
                class="mobile-menu-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium transition">
                 About
             </a>
-            <a href="#services"
+            <a href="{{ url('/#services') }}"
                class="mobile-menu-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium transition">
                 Services
             </a>
-            <a href="#testimonials"
+            <a href="{{ url('/#testimonials') }}"
                class="mobile-menu-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium transition">
                 Testimonials
             </a>
-            <a href="#faq"
+            <a href="{{ url('/#faq') }}"
                class="mobile-menu-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium transition">
                 FAQ
             </a>
-            <a href="#contact"
+            <a href="{{ url('/#contact') }}"
                class="mobile-menu-link block px-4 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition text-center shadow-lg">
                 Contact Us
             </a>

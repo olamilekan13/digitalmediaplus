@@ -88,6 +88,10 @@
                             <i class="fas fa-question-circle mr-3"></i>
                             FAQs
                         </a>
+                        <a href="{{ route('admin.custom-pages.index') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.custom-pages.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                            <i class="fas fa-file-alt mr-3"></i>
+                            Custom Pages
+                        </a>
                     </div>
 
                     <!-- Contact Management -->

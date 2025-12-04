@@ -37,10 +37,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('contact-channels', App\Http\Controllers\Admin\ContactChannelController::class);
     Route::resource('contact-messages', App\Http\Controllers\Admin\ContactMessageController::class);
 
+    // Custom Pages
+    Route::resource('custom-pages', App\Http\Controllers\Admin\CustomPageController::class)->except(['show', 'store', 'update', 'destroy']);
+    Route::post('upload-image', [App\Http\Controllers\Admin\CustomPageController::class, 'uploadImage'])->name('upload-image');
+
     // Admin Management (Super Admin only)
     Route::middleware('role:super-admin')->group(function () {
         Route::resource('admin-users', App\Http\Controllers\Admin\AdminUserController::class);
     });
 });
 
+// Auth routes must be loaded before the catch-all slug route
 require __DIR__.'/auth.php';
+
+// Custom Pages (must be last to avoid conflicting with other routes)
+Route::get('/{slug}', [App\Http\Controllers\CustomPageController::class, 'show'])
+    ->where('slug', '[a-z0-9\-]+')
+    ->name('page.show');

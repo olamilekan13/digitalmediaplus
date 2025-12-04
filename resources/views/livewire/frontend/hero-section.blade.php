@@ -44,14 +44,6 @@
                 </a>
             </div>
         @endif
-
-        <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#about" class="flex flex-col items-center text-gray-900 hover:text-gray-700 transition">
-                <span class="text-sm mb-2">Scroll Down</span>
-                <i class="fas fa-chevron-down text-2xl"></i>
-            </a>
-        </div>
             </div>
         </div>
     @else
@@ -79,14 +71,6 @@
                class="inline-flex items-center px-8 py-4 bg-white text-orange-600 text-lg font-bold rounded-lg shadow-2xl hover:bg-gray-100 hover:shadow-3xl transform hover:scale-105 transition-all duration-300">
                 Get Started
                 <i class="fas fa-arrow-right ml-3"></i>
-            </a>
-        </div>
-
-        <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#about" class="flex flex-col items-center text-gray-900 hover:text-gray-700 transition">
-                <span class="text-sm mb-2">Scroll Down</span>
-                <i class="fas fa-chevron-down text-2xl"></i>
             </a>
         </div>
             </div>
