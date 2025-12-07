@@ -5,7 +5,7 @@
          x-intersect="shown = true">
         <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-700 transform"
             :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
-            Check our Services
+            Our Products & Services
         </h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-700 transform delay-200"
            :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"

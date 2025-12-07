@@ -4,8 +4,15 @@
     <!-- Hero Section -->
     @livewire('frontend.hero-section')
 
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            @livewire('frontend.services-list')
+        </div>
+    </section>
+
     <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
+    <section id="about" class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @livewire('frontend.about-section')
         </div>
@@ -22,13 +29,6 @@
     <section id="statistics" class="py-20 bg-gradient-to-br from-orange-600 to-yellow-600">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @livewire('frontend.statistics-bar')
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            @livewire('frontend.services-list')
         </div>
     </section>
 
