@@ -110,6 +110,15 @@
                                 </span>
                             @endif
                         </a>
+                        <a href="{{ route('admin.distributor-applications.index') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.distributor-applications.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                            <i class="fas fa-user-tie mr-3"></i>
+                            Distributor Applications
+                            @if($unreviewedCount = \App\Models\DistributorApplication::unreviewed()->count())
+                                <span class="ml-auto inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">
+                                    {{ $unreviewedCount }}
+                                </span>
+                            @endif
+                        </a>
                     </div>
 
                     <!-- Admin Management (Super Admin Only) -->

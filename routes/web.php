@@ -7,6 +7,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Distributor Application Form (Public Route)
+Route::get('/become-distributor', function () {
+    return view('pages.become-distributor');
+})->name('become-distributor');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -36,6 +41,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Contact Management
     Route::resource('contact-channels', App\Http\Controllers\Admin\ContactChannelController::class);
     Route::resource('contact-messages', App\Http\Controllers\Admin\ContactMessageController::class);
+
+    // Distributor Applications Management
+    Route::get('distributor-applications', function () {
+        return view('admin.distributor-applications.index');
+    })->name('distributor-applications.index');
 
     // Custom Pages
     Route::resource('custom-pages', App\Http\Controllers\Admin\CustomPageController::class)->except(['show', 'store', 'update', 'destroy']);
