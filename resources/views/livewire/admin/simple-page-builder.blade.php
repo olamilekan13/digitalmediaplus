@@ -153,7 +153,7 @@
                     toolbar: {
                         items: [
                             'heading', '|',
-                            'bold', 'italic', 'link', '|',
+                            'bold', 'italic', 'underline', 'link', '|',
                             'bulletedList', 'numberedList', '|',
                             'imageUpload', 'blockQuote', 'insertTable', '|',
                             'undo', 'redo'
