@@ -71,13 +71,12 @@ class SimplePageBuilder extends Component
 
         if ($this->isEditMode) {
             $this->page->update($data);
-            $this->dispatch('notify', message: 'Page updated successfully.', type: 'success');
+            session()->flash('success', 'Page updated successfully.');
+            return redirect()->route('admin.custom-pages.index');
         } else {
             $this->page = CustomPage::create($data);
-            $this->pageId = $this->page->id;
-            $this->isEditMode = true;
-            $this->dispatch('notify', message: 'Page created successfully.', type: 'success');
-            return redirect()->route('admin.custom-pages.edit', $this->page->id);
+            session()->flash('success', 'Page created successfully.');
+            return redirect()->route('admin.custom-pages.index');
         }
     }
 

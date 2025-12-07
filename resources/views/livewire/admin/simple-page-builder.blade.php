@@ -61,7 +61,7 @@
                         Page Content <span class="text-red-500">*</span>
                     </label>
                     <div wire:ignore>
-                        <textarea id="content-editor" class="w-full rounded-lg border-gray-300 shadow-sm">{{ $content }}</textarea>
+                        <div id="content-editor" style="height: 300px; background: white;">{!! $content !!}</div>
                     </div>
                     @error('content')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -96,94 +96,35 @@
     </div>
 
     @push('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" />
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <script>
         document.addEventListener('livewire:init', () => {
-            let editor;
+            const quill = new Quill('#content-editor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['blockquote', 'link', 'image'],
+                        ['clean']
+                    ]
+                },
+                placeholder: 'Write your page content here...'
+            });
 
-            // Custom upload adapter
-            class MyUploadAdapter {
-                constructor(loader) {
-                    this.loader = loader;
-                }
-
-                upload() {
-                    return this.loader.file
-                        .then(file => new Promise((resolve, reject) => {
-                            const data = new FormData();
-                            data.append('upload', file);
-
-                            fetch('{{ route("admin.upload-image") }}', {
-                                method: 'POST',
-                                body: data,
-                                headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                }
-                            })
-                            .then(response => response.json())
-                            .then(result => {
-                                if (result.uploaded) {
-                                    resolve({
-                                        default: result.url
-                                    });
-                                } else {
-                                    reject(result.error.message);
-                                }
-                            })
-                            .catch(error => {
-                                reject('Upload failed');
-                            });
-                        }));
-                }
-
-                abort() {
-                    // Handle abort
-                }
-            }
-
-            function MyCustomUploadAdapterPlugin(editor) {
-                editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-                    return new MyUploadAdapter(loader);
-                };
-            }
-
-            ClassicEditor
-                .create(document.getElementById('content-editor'), {
-                    extraPlugins: [MyCustomUploadAdapterPlugin],
-                    toolbar: {
-                        items: [
-                            'heading', '|',
-                            'bold', 'italic', 'underline', 'link', '|',
-                            'bulletedList', 'numberedList', '|',
-                            'imageUpload', 'blockQuote', 'insertTable', '|',
-                            'undo', 'redo'
-                        ]
-                    },
-                    image: {
-                        toolbar: [
-                            'imageTextAlternative', '|',
-                            'imageStyle:inline', 'imageStyle:block', 'imageStyle:side'
-                        ]
-                    }
-                })
-                .then(newEditor => {
-                    editor = newEditor;
-
-                    // Update Livewire when editor content changes
-                    editor.model.document.on('change:data', () => {
-                        @this.set('content', editor.getData());
-                    });
-                })
-                .catch(error => {
-                    console.error('CKEditor initialization error:', error);
-                });
+            // Update Livewire when editor content changes
+            quill.on('text-change', function() {
+                @this.set('content', quill.root.innerHTML);
+            });
 
             // Update editor when Livewire updates the content
             Livewire.hook('morph.updated', ({ el, component }) => {
-                if (editor && component.fingerprint.name === 'admin.simple-page-builder') {
-                    const currentContent = @this.get('content');
-                    if (editor.getData() !== currentContent) {
-                        editor.setData(currentContent || '');
+                if (component.fingerprint.name === 'admin.simple-page-builder') {
+                    const currentContent = @this.get('content') || '';
+                    if (quill.root.innerHTML !== currentContent) {
+                        quill.root.innerHTML = currentContent;
                     }
                 }
             });
