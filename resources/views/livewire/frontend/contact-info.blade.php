@@ -89,7 +89,7 @@
                             <span class="text-xs font-medium text-gray-500 group-hover:text-orange-600 transition-colors duration-300 whitespace-nowrap flex-shrink-0">
                                 {{ $label }}:
                             </span>
-                            <span class="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-300 whitespace-nowrap">
+                            <span class="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors duration-300 truncate">
                                 {{ $channel->value }}
                             </span>
                         </div>

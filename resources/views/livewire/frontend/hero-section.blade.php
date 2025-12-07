@@ -18,7 +18,7 @@
                  x-init="setTimeout(() => shown = true, 100)">
 
         <!-- Heading with fade-in animation -->
-        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight transition-all duration-1000 transform text-gray-900"
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight transition-all duration-1000 transform text-gray-900 break-words px-2"
             :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
             {{ $heroSection->heading }}
         </h1>
@@ -53,7 +53,7 @@
                  x-data="{ shown: false }"
                  x-init="setTimeout(() => shown = true, 100)">
 
-        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight transition-all duration-1000 transform"
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight transition-all duration-1000 transform break-words px-2"
             :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
             Welcome to {{ config('app.name') }}
         </h1>
