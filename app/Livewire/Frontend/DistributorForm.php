@@ -124,13 +124,13 @@ class DistributorForm extends Component
             ? $siteSetting->contact_form_email
             : ($siteSetting && $siteSetting->email ? $siteSetting->email : null);
 
-        // Queue email to the site settings email address
+        // Send email to the site settings email address
         if ($recipientEmail) {
             try {
-                Mail::to($recipientEmail)->queue(new DistributorApplicationMail($application));
+                Mail::to($recipientEmail)->send(new DistributorApplicationMail($application));
             } catch (\Exception $e) {
                 // Log error but don't fail the form submission
-                \Log::error('Failed to queue distributor application email: ' . $e->getMessage());
+                \Log::error('Failed to send distributor application email: ' . $e->getMessage());
             }
         }
 
