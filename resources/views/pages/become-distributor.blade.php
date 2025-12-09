@@ -11,48 +11,6 @@
             </p>
         </div>
 
-        <!-- Benefits Section -->
-        <div class="bg-white rounded-lg shadow-md p-8 mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Why Partner With Us?</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-                            <i class="fas fa-trophy text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-900">Quality Products</h3>
-                        <p class="mt-2 text-gray-600">Access to high-quality solar products and equipment</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-                            <i class="fas fa-hands-helping text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-900">Full Support</h3>
-                        <p class="mt-2 text-gray-600">Comprehensive training and ongoing support</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-                            <i class="fas fa-chart-line text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-900">Attractive Margins</h3>
-                        <p class="mt-2 text-gray-600">Competitive pricing with good profit margins</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Application Form -->
         <livewire:frontend.distributor-form />
 
